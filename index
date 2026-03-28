@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Kishor & Rutuja — 7 May 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Tiro+Devanagari+Hindi&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --maroon:   #6b1229;
+      --maroon-d: #3d0716;
+      --maroon-m: #8c1a35;
+      --gold:     #c8891f;
+      --gold-l:   #e4ab3a;
+      --gold-ll:  #f5d87a;
+      --gold-lll: #fdf0c2;
+      --cream:    #fdf8f0;
+      --parch:    #e8d5b0;
+      --dark-ink: #1a0809;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'IM Fell English', Georgia, serif; background: var(--cream); color: var(--dark-ink); overflow-x: hidden; }
+
+    /* ═══════════════════════════════════════════
+       DOOR ENTRANCE
+    ═══════════════════════════════════════════ */
+    #door-wrapper {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; cursor: pointer;
+      transition: visibility 1.6s 1.6s;
+    }
+    .door {
+      width: 50%; height: 100%;
+      background: var(--maroon-d);
+      position: relative;
+      transition: transform 2s cubic-bezier(0.76, 0, 0.24, 1);
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+    /* Rich trellis pattern */
+    .door::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='24' fill='none' stroke='%23c8891f' stroke-width='0.7' opacity='0.2'/%3E%3Ccircle cx='30' cy='30' r='14' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.18'/%3E%3Ccircle cx='30' cy='30' r='5' fill='%23c8891f' opacity='0.12'/%3E%3Cpath d='M30 6 L30 54 M6 30 L54 30 M11.5 11.5 L48.5 48.5 M48.5 11.5 L11.5 48.5' stroke='%23c8891f' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
+      background-size: 60px 60px;
+    }
+    /* Gold edge stripe */
+    .door-left { border-right: 1px solid rgba(200,137,31,0.5); }
+    .door-right { border-left: 1px solid rgba(200,137,31,0.5); }
+    .door-left::after, .door-right::after {
+      content: ''; position: absolute; top: 5%; height: 90%; width: 2px; z-index: 2;
+      background: linear-gradient(to bottom, transparent, var(--gold-l) 30%, var(--gold) 50%, var(--gold-l) 70%, transparent);
+    }
+    .door-left::after { right: 0; }
+    .door-right::after { left: 0; }
+
+    /* Central content panel on each door */
+    .door-panel {
+      position: absolute; z-index: 2;
+      top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 16px; text-align: center;
+      width: 80%;
+    }
+    .door-left .door-panel { right: 8%; }
+    .door-right .door-panel { left: 8%; }
+
+    /* Decorative arch above name */
+    .door-arch {
+      width: 120px; height: 3px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      position: relative;
+    }
+    .door-arch::before {
+      content: '✦';
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      color: var(--gold); font-size: 0.9rem;
+    }
+
+    .door-label {
+      font-family: 'Cinzel', serif; font-size: 0.55rem;
+      letter-spacing: 6px; color: var(--gold-l); opacity: 0.7;
+      text-transform: uppercase;
+    }
+    .door-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 9vw, 6rem);
+      font-weight: 300; color: var(--gold-lll);
+      line-height: 0.95;
+      text-shadow: 0 0 40px rgba(200,137,31,0.3);
+    }
+    .door-devanagari {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--gold-l); opacity: 0.8;
+    }
+    .door-arch-bottom {
+      width: 80px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-l), transparent);
+    }
+
+    /* Centre seam glow */
+    #door-seam {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 100%; z-index: 1001; pointer-events: none;
+      background: linear-gradient(to bottom, transparent 5%, var(--gold-l) 20%, var(--gold) 50%, var(--gold-l) 80%, transparent 95%);
+      opacity: 0.6;
+      box-shadow: 0 0 18px 4px rgba(200,137,31,0.35);
+    }
+
+    /* Tap hint — bottom center */
+    .door-tap-hint {
+      position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--gold-ll); font-family: 'Cinzel', serif;
+      font-size: 0.55rem; letter-spacing: 4px; white-space: nowrap;
+      animation: blink 2s ease-in-out infinite; z-index: 3;
+    }
+    .tap-ring {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--gold-l);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      animation: pulse-ring 2s ease-in-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%,100% { box-shadow: 0 0 0 0 rgba(200,137,31,0.5); }
+      50%      { box-shadow: 0 0 0 10px rgba(200,137,31,0); }
+    }
+    @keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+    .opened .door-left { transform: translateX(-100%); }
+    .opened .door-right { transform: translateX(100%); }
+    .opened #door-seam { opacity: 0; transition: opacity 0.5s; }
+    .opened { visibility: hidden; }
+
+    /* ═══════════════════════════════════════════
+       MAIN CONTENT
+    ═══════════════════════════════════════════ */
+    main { opacity: 0; transition: opacity 1.2s ease 1.8s; padding-bottom: 100px; pointer-events: none; }
+    .opened + main { opacity: 1; pointer-events: all; }
+
+    /* ═══════════════════════════════════════════
+       SVG DECORATIVES
+    ═══════════════════════════════════════════ */
+    .mandala-divider {
+      display: block; width: 100%; text-align: center;
+      padding: 2rem 0; overflow: visible;
+    }
+    .ornament-line {
+      display: flex; align-items: center; justify-content: center;
+      gap: 18px; margin: 1rem auto 3rem;
+    }
+    .ornament-line::before, .ornament-line::after {
+      content: '';
+      display: block; height: 1px;
+      width: clamp(40px, 8vw, 100px);
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .ornament-line::after { background: linear-gradient(to left, transparent, var(--gold)); }
+    .ornament-icon { color: var(--gold); font-size: 1.2rem; }
+
+    /* ═══════════════════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 40%, rgba(107,18,41,0.0) 0%, var(--maroon-d) 100%),
+        radial-gradient(ellipse 100% 80% at 50% 0%, var(--maroon-m) 0%, var(--maroon-d) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 3rem 1.5rem 6rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* Hero background mandala pattern */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 50% 50%, transparent 28%, rgba(200,137,31,0.04) 28.5%, rgba(200,137,31,0.04) 30%, transparent 30.5%),
+        radial-gradient(circle at 50% 50%, transparent 45%, rgba(200,137,31,0.03) 45.5%, rgba(200,137,31,0.03) 47%, transparent 47.5%),
+        radial-gradient(circle at 50% 50%, transparent 62%, rgba(200,137,31,0.02) 62.5%, rgba(200,137,31,0.02) 64%, transparent 64.5%);
+      background-size: 600px 600px;
+      background-position: center;
+    }
+
+    /* Corner decorations */
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cpath d='M0 0 Q90 0 90 90' fill='none' stroke='%23c8891f' stroke-width='1' opacity='0.35'/%3E%3Cpath d='M0 0 Q60 0 60 60' fill='none' stroke='%23c8891f' stroke-width='0.7' opacity='0.3'/%3E%3Cpath d='M0 0 Q30 0 30 30' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.25'/%3E%3Ccircle cx='0' cy='0' r='8' fill='%23c8891f' opacity='0.3'/%3E%3C/svg%3E");
+      background-position: top left, top right, bottom left, bottom right;
+      background-repeat: no-repeat;
+      background-size: 180px 180px;
+    }
+
+    .hero-ganesh {
+      width: 90px; margin-bottom: 0.5rem; position: relative; z-index: 1;
+      filter: drop-shadow(0 0 20px rgba(245,216,122,0.4));
+      animation: float-ganesh 4s ease-in-out infinite;
+    }
+    @keyframes float-ganesh { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    .hero-invocation {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      color: var(--gold-ll); font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+      line-height: 2; letter-spacing: 1px; position: relative; z-index: 1;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .hero-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.55rem, 1.5vw, 0.75rem);
+      letter-spacing: 8px; color: var(--gold-l); opacity: 0.8;
+      margin-top: 2.5rem; text-transform: uppercase;
+      position: relative; z-index: 1;
+    }
+
+    .hero-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 12vw, 8rem);
+      font-weight: 300; color: #fff; line-height: 1;
+      margin: 0.6rem 0;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.3), 0 0 60px rgba(200,137,31,0.15);
+      position: relative; z-index: 1;
+    }
+    .hero-names em {
+      font-style: italic; color: var(--gold-ll);
+      font-size: 0.55em; display: block; letter-spacing: 4px;
+      margin: -0.3em 0;
+    }
+    .hero-names span { display: block; }
+
+    .hero-date {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      color: var(--gold-l); margin: 0.8rem 0;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      position: relative; z-index: 1;
+    }
+    .hero-date-en {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+      letter-spacing: 5px; color: var(--gold-ll); opacity: 0.7;
+      position: relative; z-index: 1;
+    }
+
+    /* Countdown */
+    .timer {
+      display: flex; gap: 12px; margin-top: 2.5rem;
+      position: relative; z-index: 1;
+    }
+    .t-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,137,31,0.4);
+      backdrop-filter: blur(10px);
+      padding: 18px 16px 12px; border-radius: 10px;
+      min-width: 78px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .t-box::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(200,137,31,0.08) 0%, transparent 60%);
+    }
+    .t-no {
+      display: block; font-family: 'Cinzel', serif;
+      font-size: 2rem; font-weight: 600; color: var(--gold-ll);
+      line-height: 1; text-shadow: 0 0 20px rgba(245,216,122,0.5);
+    }
+    .t-sep { font-size: 2rem; color: var(--gold-l); align-self: flex-start; padding-top: 18px; opacity: 0.5; }
+    .t-lab { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-l); opacity: 0.7; margin-top: 6px; display: block; }
+
+    /* Scroll indicator */
+    .scroll-cue {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--gold-l); opacity: 0.5; font-family: 'Cinzel', serif;
+      font-size: 0.5rem; letter-spacing: 3px; z-index: 1;
+      animation: bounce-cue 2s ease-in-out infinite;
+    }
+    @keyframes bounce-cue { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ═══════════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════════ */
+    .sec { padding: 7rem 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 300;
+      color: var(--maroon); line-height: 1.1; text-align: center;
+    }
+    .sec-title em { font-style: italic; color: var(--gold); }
+
+    /* ═══════════════════════════════════════════
+       STORY / INTRO BAND
+    ═══════════════════════════════════════════ */
+    #intro {
+      background: linear-gradient(135deg, var(--maroon-d) 0%, var(--maroon) 100%);
+      padding: 6rem 24px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #intro::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle cx='60' cy='60' r='50' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.15'/%3E%3Ccircle cx='60' cy='60' r='35' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.1'/%3E%3Cpath d='M60 10 L60 110 M10 60 L110 60 M24.4 24.4 L95.6 95.6 M95.6 24.4 L24.4 95.6' stroke='%23c8891f' stroke-width='0.4' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: 120px 120px;
+    }
+    #intro .quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: var(--gold-ll); max-width: 700px; margin: 0 auto;
+      line-height: 1.6; position: relative; z-index: 1;
+    }
+    #intro .quote::before, #intro .quote::after {
+      content: '"'; font-size: 5rem; color: var(--gold); opacity: 0.2;
+      position: absolute; font-family: 'Cormorant Garamond', serif; line-height: 0.7;
+    }
+    #intro .quote::before { top: 0; left: -20px; }
+    #intro .quote::after { content: '"'; bottom: -1rem; right: -20px; }
+    #intro .hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold-l); font-size: 1rem; margin-top: 2rem; opacity: 0.8; position: relative; z-index: 1; }
+
+    /* ═══════════════════════════════════════════
+       GALLERY — POLAROID STACK
+    ═══════════════════════════════════════════ */
+    #gallery { background: var(--cream); }
+    .gallery-container { display: flex; align-items: flex-start; gap: 60px; flex-wrap: wrap; justify-content: center; }
+    .gallery-stack {
+      position: relative; width: 300px; height: 520px; flex-shrink: 0;
+    }
+    .polaroid {
+      background: white;
+      padding: 14px 14px 50px;
+      position: absolute;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+      cursor: pointer;
+    }
+    .polaroid:hover { box-shadow: 0 25px 60px rgba(0,0,0,0.28); z-index: 10 !important; }
+    .polaroid img {
+      width: 100%; height: 220px; object-fit: cover;
+      filter: sepia(10%) saturate(90%);
+    }
+    .polaroid .cap {
+      text-align: center; font-family: 'IM Fell English', Georgia, serif;
+      font-style: italic; color: #666; font-size: 0.85rem;
+      margin-top: 8px; letter-spacing: 0.5px;
+    }
+    .polaroid.p1 { transform: rotate(-9deg) translateY(10px); top: 20px; left: 10px; z-index: 3; width: 240px; }
+    .polaroid.p2 { transform: rotate(7deg); top: 60px; right: 0; z-index: 2; width: 240px; }
+    .polaroid.p3 { transform: rotate(-2deg); bottom: 0; left: 30px; z-index: 1; width: 250px; }
+    .polaroid.p1:hover { transform: rotate(-2deg) scale(1.04); }
+    .polaroid.p2:hover { transform: rotate(2deg) scale(1.04); }
+    .polaroid.p3:hover { transform: rotate(0deg) scale(1.04); }
+
+    .gallery-message {
+      max-width: 380px; padding-top: 40px;
+    }
+    .gallery-message p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      line-height: 1.9; color: #4a2828; font-weight: 300;
+    }
+    .signature {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 2rem; color: var(--gold); margin-top: 1.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       PARENTS / FAMILY
+    ═══════════════════════════════════════════ */
+    #parents { background: var(--maroon-d); }
+    #parents .sec-title { color: var(--gold-ll); }
+    #parents .sec-title em { color: var(--gold); }
+
+    .family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; max-width: 900px; margin: 3rem auto 0; }
+    .family-card {
+      padding: 3.5rem 2.5rem;
+      position: relative; text-align: center;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(200,137,31,0.2);
+    }
+    .family-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(to right, transparent, var(--gold-l), transparent);
+    }
+    .family-side {
+      font-family: 'Cinzel', serif; font-size: 0.6rem;
+      letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 2rem;
+    }
+    .family-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    .family-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 600;
+      color: var(--gold-lll); line-height: 1.5;
+    }
+    .family-names span { color: var(--gold-l); font-weight: 300; font-style: italic; display: block; font-size: 0.9em; margin: 0.3rem 0; }
+
+    /* ═══════════════════════════════════════════
+       CEREMONY EVENTS
+    ═══════════════════════════════════════════ */
+    #ceremony { background: var(--cream); position: relative; overflow: hidden; }
+    #ceremony::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(107,18,41,0.04), transparent 70%);
+      pointer-events: none;
+    }
+
+    .events-wrapper { display: flex; flex-direction: column; gap: 2px; max-width: 860px; margin: 3rem auto 0; }
+    .event-card {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 2.5rem; padding: 3rem 2.5rem;
+      background: white; border: 1px solid var(--parch);
+      border-left: 4px solid var(--gold);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      position: relative; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .event-card:hover { transform: translateX(6px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+    .event-card::after {
+      content: '';
+      position: absolute; right: 0; top: 0; bottom: 0; width: 4px;
+      background: linear-gradient(to bottom, var(--maroon), var(--gold));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .event-card:hover::after { opacity: 1; }
+    .event-icon { font-size: 3.2rem; }
+    .event-body { }
+    .event-name { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; color: var(--maroon); }
+    .event-hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold); font-size: 1rem; margin-top: 2px; }
+    .event-time { text-align: right; }
+    .event-day { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 3px; color: #888; }
+    .event-hour { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--maroon); line-height: 1; }
+    .event-hour span { font-size: 0.7em; font-weight: 300; color: var(--gold); }
+
+    .love-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin-top: 3rem; padding: 20px 55px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-l));
+      color: var(--maroon-d); font-family: 'Cinzel', serif;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 3px;
+      border: none; border-radius: 60px; cursor: pointer;
+      box-shadow: 0 8px 30px rgba(200,137,31,0.35);
+      transition: all 0.3s ease;
+    }
+    .love-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(200,137,31,0.45); }
+
+    /* ═══════════════════════════════════════════
+       VENUE
+    ═══════════════════════════════════════════ */
+    #venue {
+      background: linear-gradient(160deg, var(--maroon) 0%, var(--maroon-d) 100%);
+      padding: 8rem 24px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #venue::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect x='0' y='0' width='100' height='100' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.12'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: 100px 100px;
+    }
+    .venue-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      color: var(--gold-ll); font-weight: 300;
+      position: relative; z-index: 1;
+    }
+    .venue-address {
+      font-size: 1.15rem; color: rgba(253,240,194,0.8);
+      line-height: 2; margin: 1.5rem auto;
+      max-width: 480px; position: relative; z-index: 1;
+      font-style: italic;
+    }
+    .venue-divider {
+      width: 60px; height: 2px; margin: 2rem auto;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      position: relative; z-index: 1;
+    }
+    .map-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 18px 48px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--gold-l);
+      color: var(--gold-ll); text-decoration: none;
+      font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 4px;
+      border-radius: 60px; transition: all 0.3s;
+      position: relative; z-index: 1;
+    }
+    .map-btn:hover { background: rgba(200,137,31,0.2); }
+
+    /* ═══════════════════════════════════════════
+       RSVP / FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      background: linear-gradient(170deg, var(--maroon-d) 0%, #120105 100%);
+      padding: 0 0 140px;
+      text-align: center;
+      border-top: none;
+      position: relative; overflow: hidden;
+    }
+    /* Top gold border */
+    footer::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(to right, transparent, var(--gold-l), var(--gold), var(--gold-ll), var(--gold), var(--gold-l), transparent);
+    }
+    /* Background mandala watermark */
+    footer::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='180' fill='none' stroke='%23c8891f' stroke-width='0.8' opacity='0.06'/%3E%3Ccircle cx='200' cy='200' r='140' fill='none' stroke='%23c8891f' stroke-width='0.8' opacity='0.05'/%3E%3Ccircle cx='200' cy='200' r='100' fill='none' stroke='%23c8891f' stroke-width='0.6' opacity='0.04'/%3E%3Ccircle cx='200' cy='200' r='60' fill='none' stroke='%23c8891f' stroke-width='0.6' opacity='0.04'/%3E%3Cpath d='M200 20 L200 380 M20 200 L380 200 M73 73 L327 327 M327 73 L73 327' stroke='%23c8891f' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: min(100%, 500px);
+    }
+
+    /* Top banner ribbon */
+    .footer-ribbon {
+      background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-m) 100%);
+      border-bottom: 1px solid rgba(200,137,31,0.2);
+      padding: 3.5rem 2rem 3rem;
+      position: relative; z-index: 1;
+    }
+    .footer-ribbon-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 20px; flex-wrap: wrap; margin-bottom: 1.5rem;
+    }
+    .footer-diya {
+      font-size: 2.4rem; animation: diya-flicker 2.5s ease-in-out infinite; display: inline-block;
+    }
+    @keyframes diya-flicker {
+      0%,100%{transform:scale(1) rotate(-2deg);filter:drop-shadow(0 0 8px rgba(245,216,122,0.4))}
+      50%{transform:scale(1.1) rotate(2deg);filter:drop-shadow(0 0 24px rgba(245,216,122,0.8))}
+    }
+    .footer-ribbon-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      font-weight: 300; font-style: italic;
+      color: var(--gold-lll); line-height: 1;
+      text-shadow: 0 0 40px rgba(200,137,31,0.25);
+    }
+    .footer-ribbon-sub {
+      font-family: 'Cinzel', serif; font-size: 0.6rem;
+      letter-spacing: 5px; color: var(--gold-l); opacity: 0.7;
+      margin-top: 0.6rem;
+    }
+
+    /* Info grid */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0; max-width: 860px; margin: 0 auto;
+      border: 1px solid rgba(200,137,31,0.15);
+      border-top: none;
+      position: relative; z-index: 1;
+    }
+    .footer-cell {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(200,137,31,0.12);
+      border-bottom: 1px solid rgba(200,137,31,0.12);
+    }
+    .footer-cell:last-child { border-right: none; }
+    .footer-cell-icon { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
+    .footer-cell-label {
+      font-family: 'Cinzel', serif; font-size: 0.5rem;
+      letter-spacing: 4px; color: var(--gold); opacity: 0.7;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .footer-cell-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--gold-lll);
+      line-height: 1.5;
+    }
+    .footer-cell-value em {
+      display: block; font-weight: 300; font-style: italic;
+      color: rgba(245,216,122,0.6); font-size: 0.9em;
+    }
+
+    /* Marathi blessing band */
+    .footer-blessing {
+      padding: 3rem 2rem;
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(200,137,31,0.1);
+    }
+    .footer-marathi {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--gold-l); margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(200,137,31,0.2);
+    }
+    .footer-tagline {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.1rem; color: rgba(253,240,194,0.6);
+      max-width: 480px; margin: 0 auto; line-height: 1.8;
+    }
+
+    /* Bottom strip */
+    .footer-bottom {
+      padding: 2rem 1.5rem 1rem;
+      border-top: 1px solid rgba(200,137,31,0.08);
+      position: relative; z-index: 1;
+    }
+    .footer-hearts { font-size: 1rem; letter-spacing: 6px; margin-bottom: 1rem; opacity: 0.5; }
+    .footer-date {
+      font-family: 'Cinzel', serif; font-size: 0.5rem;
+      letter-spacing: 5px; color: rgba(200,137,31,0.35);
+    }
+    .footer-couple { display: none; } /* replaced by ribbon title */
+
+    /* ═══════════════════════════════════════════
+       NAV BAR
+    ═══════════════════════════════════════════ */
+    nav {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 500; display: flex; gap: 6px; padding: 8px 16px;
+      background: rgba(61,7,22,0.92); backdrop-filter: blur(12px);
+      border: 1px solid rgba(200,137,31,0.35);
+      border-radius: 60px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    nav a {
+      color: rgba(245,216,122,0.7); text-decoration: none;
+      font-family: 'Cinzel', serif; font-size: 0.55rem;
+      font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      padding: 8px 12px; border-radius: 40px;
+      transition: all 0.25s;
+    }
+    nav a:hover { color: var(--gold-ll); background: rgba(200,137,31,0.15); }
+
+    /* ═══════════════════════════════════════════
+       PETALS & HEARTS
+    ═══════════════════════════════════════════ */
+    .petal { position: fixed; top: -6%; z-index: 999; pointer-events: none; animation: fall-petal linear forwards; font-size: 1.2rem; }
+    @keyframes fall-petal { to { transform: translateY(110vh) rotate(540deg) translateX(30px); opacity: 0; } }
+    .floater { position: fixed; pointer-events: none; z-index: 999; font-size: 1.4rem; transition: all 3.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+
+    /* ═══════════════════════════════════════════
+       REVEAL ANIMATION
+    ═══════════════════════════════════════════ */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    @media (max-width: 640px) {
+      .event-card { grid-template-columns: auto 1fr; }
+      .event-time { grid-column: 2; text-align: left; }
+      .gallery-container { gap: 30px; }
+    }
+
+    /* ═══════════════════════════════════════════
+       MUSIC PLAYER
+    ═══════════════════════════════════════════ */
+    #music-player {
+      position: fixed; top: 24px; right: 24px; z-index: 600;
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(61,7,22,0.92); backdrop-filter: blur(14px);
+      border: 1px solid rgba(200,137,31,0.4);
+      border-radius: 60px; padding: 10px 20px 10px 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      opacity: 0; transform: translateY(-20px);
+      transition: opacity 0.8s ease 2s, transform 0.8s ease 2s;
+      cursor: pointer; user-select: none;
+    }
+    #music-player.show { opacity: 1; transform: translateY(0); }
+
+    .mp-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-l));
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(200,137,31,0.4);
+      transition: transform 0.2s;
+    }
+    .mp-btn:hover { transform: scale(1.1); }
+
+    .mp-info { display: flex; flex-direction: column; }
+    .mp-title {
+      font-family: 'Cinzel', serif; font-size: 0.6rem;
+      letter-spacing: 2px; color: var(--gold-ll);
+    }
+    .mp-sub {
+      font-family: 'IM Fell English', serif; font-style: italic;
+      font-size: 0.65rem; color: rgba(245,216,122,0.6); margin-top: 1px;
+    }
+
+    /* Equaliser bars — animated when playing */
+    .mp-bars {
+      display: flex; align-items: flex-end; gap: 2px; height: 18px; margin-left: 4px;
+    }
+    .mp-bars span {
+      display: block; width: 3px; background: var(--gold-l); border-radius: 2px;
+      animation: none; opacity: 0.4;
+    }
+    .mp-bars.playing span { opacity: 1; }
+    .mp-bars.playing span:nth-child(1) { animation: eq 0.8s ease-in-out infinite; }
+    .mp-bars.playing span:nth-child(2) { animation: eq 0.6s ease-in-out infinite 0.1s; }
+    .mp-bars.playing span:nth-child(3) { animation: eq 1s ease-in-out infinite 0.2s; }
+    .mp-bars.playing span:nth-child(4) { animation: eq 0.7s ease-in-out infinite 0.05s; }
+    @keyframes eq {
+      0%,100% { height: 4px; }
+      50%      { height: 16px; }
+    }
+
+    /* ═══════════════════════════════════════════
+       MAP SECTION
+    ═══════════════════════════════════════════ */
+    .map-wrapper {
+      position: relative; max-width: 720px; margin: 3rem auto 0;
+    }
+    .map-frame-border {
+      position: relative; padding: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,137,31,0.35);
+      border-radius: 4px;
+    }
+    /* Ornamental corners */
+    .map-corner {
+      position: absolute; width: 28px; height: 28px;
+      border-color: var(--gold-l); border-style: solid; opacity: 0.8;
+    }
+    .map-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .map-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+    .map-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+    .map-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    .map-osm {
+      position: relative; width: 100%; height: 340px; overflow: hidden;
+      border-radius: 2px; background: #d4c5a9;
+    }
+    .map-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: sepia(25%) saturate(85%) hue-rotate(8deg) brightness(0.95);
+      transition: filter 0.4s;
+    }
+    .map-osm:hover .map-img { filter: sepia(0%) saturate(100%) brightness(1); }
+    .map-overlay {
+      position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(to bottom, transparent 50%, rgba(61,7,22,0.35) 100%);
+    }
+
+    /* Floating info card over the map */
+    .map-pin-card {
+      position: absolute; bottom: 28px; left: 28px;
+      background: rgba(61,7,22,0.92); backdrop-filter: blur(12px);
+      border: 1px solid rgba(200,137,31,0.4);
+      border-radius: 10px; padding: 12px 18px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .map-pin-icon { font-size: 1.5rem; }
+    .map-pin-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 600; color: var(--gold-ll);
+    }
+    .map-pin-addr {
+      font-family: 'Cinzel', serif; font-size: 0.55rem;
+      letter-spacing: 1px; color: rgba(245,216,122,0.6); margin-top: 2px;
+    }
+
+    .map-actions {
+      display: flex; gap: 14px; justify-content: center;
+      margin-top: 2rem; flex-wrap: wrap;
+    }
+    .map-btn-alt {
+      background: rgba(255,255,255,0.05) !important;
+      border-color: rgba(200,137,31,0.3) !important;
+      color: rgba(245,216,122,0.7) !important;
+    }
+    .map-btn-alt:hover { background: rgba(200,137,31,0.15) !important; }
+
+    @media (max-width: 480px) {
+      .map-iframe { height: 260px; }
+      .map-pin-card { display: none; }
+    }
+
+  </style>
+</head>
+<body onclick="openDoors()">
+
+  <!-- ══ DOOR ENTRANCE ══ -->
+  <div id="door-seam"></div>
+  <div id="door-wrapper">
+    <div class="door door-left">
+      <div class="door-panel">
+        <div class="door-arch"></div>
+        <p class="door-label">विवाह सोहळा</p>
+        <h2 class="door-name">Kishor</h2>
+        <p class="door-devanagari">किशोर</p>
+        <div class="door-arch-bottom"></div>
+        <p class="door-label" style="font-size:0.5rem;letter-spacing:3px;opacity:0.5">GROOM</p>
+      </div>
+      <div class="door-tap-hint">
+        <div class="tap-ring">👆</div>
+        TAP TO OPEN
+      </div>
+    </div>
+    <div class="door door-right">
+      <div class="door-panel">
+        <div class="door-arch"></div>
+        <p class="door-label">शुभ विवाह</p>
+        <h2 class="door-name">Rutuja</h2>
+        <p class="door-devanagari">रुतुजा</p>
+        <div class="door-arch-bottom"></div>
+        <p class="door-label" style="font-size:0.5rem;letter-spacing:3px;opacity:0.5">BRIDE</p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ══ MUSIC PLAYER ══ -->
+    <div id="music-player" onclick="toggleMusic()">
+      <button class="mp-btn" id="mp-icon" aria-label="Toggle music">🎵</button>
+      <div class="mp-info">
+        <span class="mp-title">WEDDING SHEHNAI</span>
+        <span class="mp-sub">Classical &nbsp;·&nbsp; Auspicious</span>
+      </div>
+      <div class="mp-bars" id="mp-bars">
+        <span style="height:6px"></span>
+        <span style="height:12px"></span>
+        <span style="height:8px"></span>
+        <span style="height:14px"></span>
+      </div>
+    </div>
+
+    <!-- ══ HERO ══ -->
+    <section id="hero">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Ganesha_vector_with_no_background.svg/1024px-Ganesha_vector_with_no_background.svg.png" class="hero-ganesh" alt="Ganesha">
+      <div class="hero-invocation">
+        <p>॥ श्री गणेशाय नमः ॥</p>
+        <p>॥ श्री यदोबा देवाय नमः ॥</p>
+      </div>
+
+      <p class="hero-sub" style="margin-top:3rem;">WITH GREAT JOY, WE INVITE YOU TO THE WEDDING OF</p>
+
+      <h1 class="hero-names">
+        <span>Kishor</span>
+        <em>&amp;</em>
+        <span>Rutuja</span>
+      </h1>
+
+      <p class="hero-date">७ मे २०२६</p>
+      <p class="hero-date-en">THURSDAY · 7 MAY · 2026 · SATARA</p>
+
+      <div class="timer">
+        <div class="t-box"><span class="t-no" id="days">00</span><span class="t-lab">Days</span></div>
+        <div class="t-sep">·</div>
+        <div class="t-box"><span class="t-no" id="hrs">00</span><span class="t-lab">Hours</span></div>
+        <div class="t-sep">·</div>
+        <div class="t-box"><span class="t-no" id="mins">00</span><span class="t-lab">Mins</span></div>
+        <div class="t-sep">·</div>
+        <div class="t-box"><span class="t-no" id="secs">00</span><span class="t-lab">Secs</span></div>
+      </div>
+
+      <div class="scroll-cue">
+        <span>SCROLL</span>
+        <svg width="16" height="24" viewBox="0 0 16 24" fill="none"><rect x="1" y="1" width="14" height="22" rx="7" stroke="currentColor" stroke-width="1.5"/><rect x="6.5" y="5" width="3" height="6" rx="1.5" fill="currentColor" opacity="0.6"><animate attributeName="y" values="5;11;5" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0;0.6" dur="1.8s" repeatCount="indefinite"/></rect></svg>
+      </div>
+    </section>
+
+    <!-- ══ INTRO QUOTE BAND ══ -->
+    <section id="intro">
+      <div class="reveal">
+        <p class="quote">Two souls, one journey — bound by devotion, blessed by family, and celebrated in joy.</p>
+        <p class="hin">दोन मनांचं मिलन, एक सुंदर आयुष्याची सुरुवात</p>
+      </div>
+    </section>
+
+    <!-- ══ GALLERY ══ -->
+    <section id="gallery" class="sec">
+      <div class="container reveal">
+        <h2 class="sec-title">Moments <em>Together</em></h2>
+        <div class="ornament-line"><span class="ornament-icon">✦</span><span class="ornament-icon">🌸</span><span class="ornament-icon">✦</span></div>
+        <div class="gallery-container">
+          <div class="gallery-stack">
+            <div class="polaroid p1">
+              <img src="engage1.jpg" alt="Pic 1" onerror="this.style.background='linear-gradient(135deg,#fdf6ec,#e8d5b0)';this.style.height='220px';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.alt='🌸';this.src='';this.outerHTML='<div style=\'background:linear-gradient(135deg,#fdf6ec,#e8d5b0);height:220px;display:flex;align-items:center;justify-content:center;font-size:3rem;\'>🌸</div>'">
+              <p class="cap">The First Step</p>
+            </div>
+            <div class="polaroid p2">
+              <img src="engage2.jpg" alt="Pic 2" onerror="this.outerHTML='<div style=\'background:linear-gradient(135deg,#fdf6ec,#d4b896);height:220px;display:flex;align-items:center;justify-content:center;font-size:3rem;\'>💍</div>'">
+              <p class="cap">Two Hearts</p>
+            </div>
+            <div class="polaroid p3">
+              <img src="engage3.jpg" alt="Pic 3" onerror="this.outerHTML='<div style=\'background:linear-gradient(135deg,#fdf6ec,#c9a07a);height:220px;display:flex;align-items:center;justify-content:center;font-size:3rem;\'>🪔</div>'">
+              <p class="cap">Eternal Love</p>
+            </div>
+          </div>
+          <div class="gallery-message">
+            <p>With hearts full of love and homes full of blessings, we joyfully invite you to witness the union of our beloved Kishor and Rutuja.</p>
+            <p style="margin-top:1.2rem;">Your presence will make our celebration complete.</p>
+            <div class="signature">Kishor & Rutuja</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ PARENTS ══ -->
+    <section id="parents" class="sec">
+      <div class="container reveal">
+        <h2 class="sec-title">Family <em>Blessings</em></h2>
+        <div class="ornament-line" style="--gold:#c8891f">
+          <span style="color:#c8891f">✦</span><span style="color:#c8891f;font-size:1.2rem">🙏</span><span style="color:#c8891f">✦</span>
+        </div>
+        <div class="family-grid">
+          <div class="family-card">
+            <span class="family-icon">🌿</span>
+            <div class="family-side">Groom's Family</div>
+            <div class="family-names">
+              Mr. Dattatray Sahebrao Kumbhar
+              <span>& Mrs. Sindhu Dattatray Kumbhar</span>
+            </div>
+          </div>
+          <div class="family-card">
+            <span class="family-icon">🌺</span>
+            <div class="family-side">Bride's Family</div>
+            <div class="family-names">
+              Mr. Devanand Khashaba Kumbhar
+              <span>& Mrs. Shirisha Devanand Kumbhar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CEREMONY ══ -->
+    <section id="ceremony" class="sec">
+      <div class="container reveal">
+        <h2 class="sec-title">The <em>Muhurta</em></h2>
+        <div class="ornament-line"><span class="ornament-icon">✦</span><span class="ornament-icon">🪔</span><span class="ornament-icon">✦</span></div>
+
+        <div class="events-wrapper">
+          <div class="event-card">
+            <div class="event-icon">🌿</div>
+            <div class="event-body">
+              <div class="event-name">Haldi Ceremony</div>
+              <div class="event-hin">हळद समारंभ</div>
+            </div>
+            <div class="event-time">
+              <div class="event-day">THURSDAY · 7 MAY 2026</div>
+              <div class="event-hour">11:00 <span>AM</span></div>
+            </div>
+          </div>
+          <div class="event-card" style="border-left-color:var(--maroon)">
+            <div class="event-icon">🪔</div>
+            <div class="event-body">
+              <div class="event-name">Shubh Vivah</div>
+              <div class="event-hin">शुभ विवाह</div>
+            </div>
+            <div class="event-time">
+              <div class="event-day">THURSDAY · 7 MAY 2026</div>
+              <div class="event-hour">03:11 <span>PM</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center">
+          <button class="love-btn" onclick="spawnHearts()">
+            <span>❤️</span> SHOWER BLESSINGS
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ VENUE ══ -->
+    <section id="venue">
+      <div class="reveal">
+        <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:6px;color:var(--gold-l);opacity:0.7;margin-bottom:2rem;">THE CELEBRATION WILL BE HELD AT</p>
+        <div class="venue-name">Shree Ram Palace</div>
+        <div class="venue-divider"></div>
+        <p class="venue-address">National Highway 4, Kashil<br>Satara, Maharashtra</p>
+
+        <!-- MAP CARD -->
+        <div class="map-wrapper">
+          <div class="map-frame-border">
+            <div class="map-corner tl"></div>
+            <div class="map-corner tr"></div>
+            <div class="map-corner bl"></div>
+            <div class="map-corner br"></div>
+
+            <!-- OpenStreetMap static tile — works without hosting -->
+            <div class="map-osm" id="mapCanvas">
+              <img
+                src="https://staticmap.openstreetmap.de/staticmap.php?center=17.6805,74.0400&zoom=14&size=720x340&maptype=mapnik&markers=17.6805,74.0400,red-pushpin"
+                alt="Shree Ram Palace location map"
+                class="map-img"
+                onerror="this.parentElement.innerHTML=fallbackMap()"
+              />
+              <!-- Overlay gradient for depth -->
+              <div class="map-overlay"></div>
+            </div>
+
+            <!-- Floating pin card -->
+            <div class="map-pin-card">
+              <span class="map-pin-icon">&#128205;</span>
+              <div>
+                <div class="map-pin-name">Shree Ram Palace</div>
+                <div class="map-pin-addr">NH-4, Kashil, Satara, Maharashtra</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=17.6805,74.0400" target="_blank" class="map-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            GET DIRECTIONS
+          </a>
+          <a href="https://maps.apple.com/?ll=17.6805,74.0400&q=Shree+Ram+Palace" target="_blank" class="map-btn map-btn-alt">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            APPLE MAPS
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer>
+
+      <!-- Top ribbon: couple names + diyas -->
+      <div class="footer-ribbon reveal">
+        <div class="footer-ribbon-row">
+          <span class="footer-diya">🪔</span>
+          <h2 class="footer-ribbon-title">Kishor &amp; Rutuja</h2>
+          <span class="footer-diya" style="animation-delay:0.8s">🪔</span>
+        </div>
+        <p class="footer-ribbon-sub">TOGETHER · FOREVER · 7 MAY 2026</p>
+      </div>
+
+      <!-- Info grid -->
+      <div class="footer-grid reveal">
+        <div class="footer-cell">
+          <span class="footer-cell-icon">📅</span>
+          <div class="footer-cell-label">Date</div>
+          <div class="footer-cell-value">Thursday, 7 May 2026<em>७ मे २०२६</em></div>
+        </div>
+        <div class="footer-cell">
+          <span class="footer-cell-icon">🕒</span>
+          <div class="footer-cell-label">Muhurta</div>
+          <div class="footer-cell-value">03:11 PM<em>Shubh Vivah</em></div>
+        </div>
+        <div class="footer-cell">
+          <span class="footer-cell-icon">📍</span>
+          <div class="footer-cell-label">Venue</div>
+          <div class="footer-cell-value">Shree Ram Palace<em>NH-4, Kashil, Satara</em></div>
+        </div>
+        <div class="footer-cell">
+          <span class="footer-cell-icon">🌿</span>
+          <div class="footer-cell-label">Haldi</div>
+          <div class="footer-cell-value">11:00 AM<em>Same day</em></div>
+        </div>
+      </div>
+
+      <!-- Blessing band -->
+      <div class="footer-blessing reveal">
+        <p class="footer-marathi">॥ आमच्या आनंदात सहभागी व्हा ॥</p>
+        <p class="footer-tagline">"With the blessings of our families and the grace of God, we begin a new journey — and we want you by our side."</p>
+      </div>
+
+      <!-- Bottom -->
+      <div class="footer-bottom reveal">
+        <div class="footer-hearts">🌸 &nbsp; 💛 &nbsp; 🌸 &nbsp; 💛 &nbsp; 🌸</div>
+        <div class="footer-date">MAY 7, 2026 &nbsp;·&nbsp; SATARA, MAHARASHTRA &nbsp;·&nbsp; SHREE RAM PALACE</div>
+      </div>
+
+    </footer>
+
+    <!-- ══ BOTTOM NAV ══ -->
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#parents">Family</a>
+      <a href="#ceremony">Timing</a>
+      <a href="#venue">Venue</a>
+    </nav>
+  </main>
+
+  <script>
+    /* ── DOOR ── */
+    /* Safety: show content even if openDoors never fires */
+    setTimeout(() => {
+      document.querySelector("main").style.opacity = "1";
+      document.querySelector("main").style.pointerEvents = "all";
+    }, 5000);
+
+    function openDoors() {
+      const wrapper = document.getElementById('door-wrapper');
+      if (!wrapper.classList.contains('opened')) {
+        wrapper.classList.add('opened');
+        startPetals();
+        startCountdown();
+        setTimeout(() => {
+          document.getElementById('music-player').classList.add('show');
+          // Auto-start music after door opens (user gesture already happened)
+          setTimeout(() => {
+            if (!musicPlaying) {
+              if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+              if (audioCtx.state === 'suspended') audioCtx.resume();
+              musicPlaying = true;
+              playMelody();
+              document.getElementById('mp-icon').textContent = '🔊';
+              document.getElementById('mp-bars').classList.add('playing');
+            }
+          }, 400);
+        }, 2000);
+      }
+    }
+
+    /* ── PETALS ── */
+    const petalEmojis = ['🌸','🌺','🌼','✨','🍂'];
+    function startPetals() {
+      let count = 0;
+      const interval = setInterval(() => {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (Math.random() * 4 + 3) + 's';
+        p.style.opacity = Math.random() * 0.5 + 0.5;
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 8000);
+        count++;
+        if (count > 40) clearInterval(interval);
+      }, 200);
+    }
+
+    /* ── COUNTDOWN ── */
+    function startCountdown() {
+      const target = new Date("May 7, 2026 15:11:00").getTime();
+      function tick() {
+        const diff = target - Date.now();
+        if (diff > 0) {
+          const d = Math.floor(diff / 86400000);
+          const h = Math.floor((diff % 86400000) / 3600000);
+          const m = Math.floor((diff % 3600000) / 60000);
+          const s = Math.floor((diff % 60000) / 1000);
+          document.getElementById('days').textContent  = String(d).padStart(2,'0');
+          document.getElementById('hrs').textContent   = String(h).padStart(2,'0');
+          document.getElementById('mins').textContent  = String(m).padStart(2,'0');
+          document.getElementById('secs').textContent  = String(s).padStart(2,'0');
+        }
+      }
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(r => obs.observe(r));
+
+    /* ── MUSIC ── */
+    let audioCtx = null, musicPlaying = false, musicNodes = [], musicLoop = null;
+
+    // Shehnai-like melody using Web Audio API
+    // Scale: Bhairavi raga intervals (Sa Re Ga Ma Pa Dha Ni Sa)
+    const MELODY = [
+      // freq (Hz), duration (s), gap after (s)
+      [392.0, 0.5, 0.05], // G4
+      [440.0, 0.4, 0.05], // A4
+      [493.9, 0.6, 0.1 ], // B4
+      [523.3, 0.8, 0.15], // C5
+      [587.3, 0.5, 0.05], // D5
+      [523.3, 0.4, 0.05], // C5
+      [493.9, 0.3, 0.05], // B4
+      [440.0, 0.6, 0.1 ], // A4
+      [392.0, 0.4, 0.05], // G4
+      [349.2, 0.5, 0.05], // F4
+      [329.6, 0.4, 0.05], // E4
+      [349.2, 0.3, 0.05], // F4
+      [392.0, 0.8, 0.2 ], // G4
+      [440.0, 0.5, 0.05], // A4
+      [493.9, 0.4, 0.05], // B4
+      [523.3, 1.0, 0.2 ], // C5
+      [493.9, 0.3, 0.05], // B4
+      [440.0, 0.4, 0.05], // A4
+      [392.0, 0.5, 0.05], // G4
+      [349.2, 1.2, 0.3 ], // F4 (held)
+    ];
+
+    function createShehnaiNote(ctx, freq, startTime, duration) {
+      const osc1 = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();  // slight detune for richness
+      const osc3 = ctx.createOscillator();  // harmonic overtone
+
+      const gainNode = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
+
+      // Shehnai-like: sawtooth + triangle blend
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(freq, startTime);
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(freq * 1.003, startTime); // slight detune
+      osc3.type = 'sawtooth';
+      osc3.frequency.setValueAtTime(freq * 2.01, startTime);  // octave overtone
+
+      // Bandpass filter — gives the nasal shehnai character
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(freq * 3.5, startTime);
+      filter.Q.setValueAtTime(2.5, startTime);
+
+      // Vibrato via LFO
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      lfo.frequency.setValueAtTime(5.5, startTime);
+      lfoGain.gain.setValueAtTime(freq * 0.012, startTime);
+      lfo.connect(lfoGain);
+      lfo.connect(osc1.frequency);
+      lfo.connect(osc2.frequency);
+
+      // Volume envelope: attack, sustain, release
+      gainNode.gain.setValueAtTime(0, startTime);
+      gainNode.gain.linearRampToValueAtTime(0.18, startTime + 0.06);   // attack
+      gainNode.gain.setValueAtTime(0.15, startTime + duration * 0.7);  // sustain
+      gainNode.gain.linearRampToValueAtTime(0, startTime + duration);  // release
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      osc3.connect(filter);
+      filter.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      osc1.start(startTime); osc1.stop(startTime + duration + 0.05);
+      osc2.start(startTime); osc2.stop(startTime + duration + 0.05);
+      osc3.start(startTime); osc3.stop(startTime + duration + 0.05);
+      lfo.start(startTime); lfo.stop(startTime + duration + 0.05);
+
+      return [osc1, osc2, osc3, lfo, gainNode];
+    }
+
+    function playMelody() {
+      if (!audioCtx || !musicPlaying) return;
+
+      let t = audioCtx.currentTime + 0.1;
+      let allNodes = [];
+      MELODY.forEach(([freq, dur, gap]) => {
+        const nodes = createShehnaiNote(audioCtx, freq, t, dur);
+        allNodes.push(...nodes);
+        t += dur + gap;
+      });
+
+      // Schedule next loop
+      const totalDuration = MELODY.reduce((acc, [,d,g]) => acc + d + g, 0);
+      musicLoop = setTimeout(playMelody, totalDuration * 1000 - 200);
+    }
+
+    function toggleMusic() {
+      event.stopPropagation(); // don't open doors
+      if (!musicPlaying) {
+        // First play — create context
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        musicPlaying = true;
+        playMelody();
+        document.getElementById('mp-icon').textContent = '🔊';
+        document.getElementById('mp-bars').classList.add('playing');
+      } else {
+        musicPlaying = false;
+        clearTimeout(musicLoop);
+        if (audioCtx) audioCtx.suspend();
+        document.getElementById('mp-icon').textContent = '🎵';
+        document.getElementById('mp-bars').classList.remove('playing');
+      }
+    }
+
+    /* ── MAP FALLBACK ── */
+    function fallbackMap() {
+      // Beautiful illustrated SVG map when image fails to load
+      return `<svg width="100%" height="340" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" style="display:block">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c8b89a"/>
+            <stop offset="100%" stop-color="#e8d5b0"/>
+          </linearGradient>
+          <linearGradient id="road" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#b8a888"/>
+            <stop offset="50%" stop-color="#c8b898"/>
+            <stop offset="100%" stop-color="#b8a888"/>
+          </linearGradient>
+        </defs>
+        <!-- Background -->
+        <rect width="720" height="340" fill="url(#sky)"/>
+        <!-- Fields -->
+        <rect x="0" y="180" width="720" height="160" fill="#c4b48a" opacity="0.6"/>
+        <rect x="0" y="200" width="720" height="140" fill="#b8a87a" opacity="0.5"/>
+        <!-- NH4 Highway -->
+        <rect x="0" y="155" width="720" height="38" fill="url(#road)"/>
+        <rect x="0" y="170" width="720" height="8" fill="#a89868" opacity="0.5"/>
+        <!-- Dashed centre line -->
+        <line x1="0" y1="174" x2="720" y2="174" stroke="#d4c4a0" stroke-width="2" stroke-dasharray="30,20"/>
+        <!-- NH4 label -->
+        <rect x="20" y="158" width="70" height="22" rx="4" fill="#7b6a4a" opacity="0.7"/>
+        <text x="55" y="173" font-family="sans-serif" font-size="11" fill="#f5e8c0" text-anchor="middle" font-weight="bold">NH - 4</text>
+        <!-- Trees left -->
+        <circle cx="80" cy="148" r="18" fill="#6b8a4a" opacity="0.8"/>
+        <circle cx="110" cy="152" r="14" fill="#5a7a3a" opacity="0.8"/>
+        <circle cx="150" cy="146" r="16" fill="#7a9a5a" opacity="0.7"/>
+        <circle cx="600" cy="148" r="18" fill="#6b8a4a" opacity="0.8"/>
+        <circle cx="630" cy="152" r="14" fill="#5a7a3a" opacity="0.8"/>
+        <circle cx="660" cy="146" r="16" fill="#7a9a5a" opacity="0.7"/>
+        <!-- Venue building -->
+        <rect x="295" y="72" width="130" height="88" rx="3" fill="#8c6a3a"/>
+        <rect x="285" y="68" width="150" height="12" rx="2" fill="#7b5a2a"/>
+        <!-- Roof detail -->
+        <polygon points="360,42 285,68 435,68" fill="#6b4a1a"/>
+        <polygon points="360,48 300,68 420,68" fill="#7b5a2a"/>
+        <!-- Dome top -->
+        <ellipse cx="360" cy="44" rx="18" ry="10" fill="#c8891f" opacity="0.9"/>
+        <circle cx="360" cy="36" r="5" fill="#e4ab3a"/>
+        <!-- Windows -->
+        <rect x="308" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
+        <rect x="349" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
+        <rect x="390" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
+        <!-- Door -->
+        <rect x="340" y="128" width="40" height="32" rx="3" fill="#5a3a1a"/>
+        <ellipse cx="360" cy="128" rx="20" ry="8" fill="#6b4a2a"/>
+        <!-- Gate posts -->
+        <rect x="275" y="115" width="12" height="45" fill="#7b6040"/>
+        <rect x="433" y="115" width="12" height="45" fill="#7b6040"/>
+        <rect x="271" y="112" width="20" height="8" rx="2" fill="#c8891f"/>
+        <rect x="429" y="112" width="20" height="8" rx="2" fill="#c8891f"/>
+        <!-- Venue name banner -->
+        <rect x="285" y="74" width="150" height="20" rx="2" fill="rgba(61,7,22,0.75)"/>
+        <text x="360" y="88" font-family="Georgia,serif" font-size="11" fill="#f5d87a" text-anchor="middle" font-weight="bold">SHREE RAM PALACE</text>
+        <!-- Location pin -->
+        <circle cx="360" cy="32" r="14" fill="#6b1229" opacity="0.0"/>
+        <path d="M360 18 C353 18 347 24 347 31 C347 40 360 52 360 52 C360 52 373 40 373 31 C373 24 367 18 360 18Z" fill="#c8891f" opacity="0" />
+        <!-- Kashil label -->
+        <rect x="310" y="218" width="100" height="22" rx="11" fill="rgba(61,7,22,0.7)"/>
+        <text x="360" y="233" font-family="sans-serif" font-size="10" fill="#f5d87a" text-anchor="middle" letter-spacing="2">KASHIL, SATARA</text>
+        <!-- Compass -->
+        <circle cx="672" cy="48" r="22" fill="rgba(61,7,22,0.6)" stroke="#c8891f" stroke-width="1"/>
+        <text x="672" y="36" font-family="sans-serif" font-size="10" fill="#f5d87a" text-anchor="middle" font-weight="bold">N</text>
+        <polygon points="672,40 668,56 672,53 676,56" fill="#c8891f"/>
+        <polygon points="672,66 668,50 672,53 676,50" fill="#888" opacity="0.6"/>
+      </svg>`;
+    }
+
+    /* ── HEARTS BURST ── */
+    function spawnHearts() {
+      const items = ['❤️','🌸','✨','💐','🌺','🪔','💛'];
+      for (let i = 0; i < 30; i++) {
+        const el = document.createElement('div');
+        el.className = 'floater';
+        el.textContent = items[Math.floor(Math.random() * items.length)];
+        const startX = Math.random() * window.innerWidth;
+        el.style.left = startX + 'px';
+        el.style.bottom = '-50px';
+        el.style.fontSize = (Math.random() * 18 + 16) + 'px';
+        el.style.opacity = '1';
+        document.body.appendChild(el);
+        setTimeout(() => {
+          el.style.bottom = (60 + Math.random() * 80) + 'vh';
+          el.style.left = (startX + (Math.random() * 120 - 60)) + 'px';
+          el.style.opacity = '0';
+          el.style.transform = `rotate(${Math.random()*360}deg) scale(${Math.random()*0.5+0.8})`;
+        }, 50);
+        setTimeout(() => el.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
