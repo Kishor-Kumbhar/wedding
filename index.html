@@ -25,13 +25,19 @@
     body { font-family: 'IM Fell English', Georgia, serif; background: var(--cream); color: var(--dark-ink); overflow-x: hidden; }
 
     /* ═══════════════════════════════════════════
-       DOOR ENTRANCE
+       DOOR ENTRANCE — IMPROVED
     ═══════════════════════════════════════════ */
     #door-wrapper {
       position: fixed; inset: 0; z-index: 1000;
       display: flex; cursor: pointer;
-      transition: visibility 1.6s 1.6s;
     }
+    /* Fade-out after open */
+    #door-wrapper.opened {
+      pointer-events: none;
+      animation: door-wrapper-fade 0.5s ease 2s forwards;
+    }
+    @keyframes door-wrapper-fade { to { visibility: hidden; opacity: 0; } }
+
     .door {
       width: 50%; height: 100%;
       background: var(--maroon-d);
@@ -47,7 +53,6 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='24' fill='none' stroke='%23c8891f' stroke-width='0.7' opacity='0.2'/%3E%3Ccircle cx='30' cy='30' r='14' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.18'/%3E%3Ccircle cx='30' cy='30' r='5' fill='%23c8891f' opacity='0.12'/%3E%3Cpath d='M30 6 L30 54 M6 30 L54 30 M11.5 11.5 L48.5 48.5 M48.5 11.5 L11.5 48.5' stroke='%23c8891f' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
       background-size: 60px 60px;
     }
-    /* Gold edge stripe */
     .door-left { border-right: 1px solid rgba(200,137,31,0.5); }
     .door-right { border-left: 1px solid rgba(200,137,31,0.5); }
     .door-left::after, .door-right::after {
@@ -57,20 +62,19 @@
     .door-left::after { right: 0; }
     .door-right::after { left: 0; }
 
-    /* Central content panel on each door */
     .door-panel {
       position: absolute; z-index: 2;
       top: 50%; transform: translateY(-50%);
       display: flex; flex-direction: column; align-items: center;
-      gap: 16px; text-align: center;
-      width: 80%;
+      gap: 12px; text-align: center;
+      width: 84%;
+      padding: 0 8px;
     }
-    .door-left .door-panel { right: 8%; }
-    .door-right .door-panel { left: 8%; }
+    .door-left .door-panel { right: 6%; }
+    .door-right .door-panel { left: 6%; }
 
-    /* Decorative arch above name */
     .door-arch {
-      width: 120px; height: 3px;
+      width: min(120px, 40vw); height: 3px;
       background: linear-gradient(to right, transparent, var(--gold), transparent);
       position: relative;
     }
@@ -81,20 +85,20 @@
     }
 
     .door-label {
-      font-family: 'Cinzel', serif; font-size: 0.55rem;
-      letter-spacing: 6px; color: var(--gold-l); opacity: 0.7;
+      font-family: 'Cinzel', serif; font-size: clamp(0.42rem, 1.2vw, 0.55rem);
+      letter-spacing: clamp(3px, 1vw, 6px); color: var(--gold-l); opacity: 0.7;
       text-transform: uppercase;
     }
     .door-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 9vw, 6rem);
+      font-size: clamp(2.4rem, 7vw, 6rem);
       font-weight: 300; color: var(--gold-lll);
       line-height: 0.95;
       text-shadow: 0 0 40px rgba(200,137,31,0.3);
     }
     .door-devanagari {
       font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-size: clamp(0.85rem, 2vw, 1.4rem);
       color: var(--gold-l); opacity: 0.8;
     }
     .door-arch-bottom {
@@ -102,21 +106,15 @@
       background: linear-gradient(to right, transparent, var(--gold-l), transparent);
     }
 
-    /* Centre seam glow */
-    #door-seam {
-      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
-      width: 6px; height: 100%; z-index: 1001; pointer-events: none;
-      background: linear-gradient(to bottom, transparent 5%, var(--gold-l) 20%, var(--gold) 50%, var(--gold-l) 80%, transparent 95%);
-      opacity: 0.6;
-      box-shadow: 0 0 18px 4px rgba(200,137,31,0.35);
-    }
+    /* Seam */
+    #door-seam { display: none; }
 
-    /* Tap hint — bottom center */
+    /* Tap hint */
     .door-tap-hint {
-      position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: clamp(28px, 6vh, 56px); left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 8px;
       color: var(--gold-ll); font-family: 'Cinzel', serif;
-      font-size: 0.55rem; letter-spacing: 4px; white-space: nowrap;
+      font-size: clamp(0.45rem, 1.3vw, 0.55rem); letter-spacing: 4px; white-space: nowrap;
       animation: blink 2s ease-in-out infinite; z-index: 3;
     }
     .tap-ring {
@@ -134,8 +132,6 @@
 
     .opened .door-left { transform: translateX(-100%); }
     .opened .door-right { transform: translateX(100%); }
-    .opened #door-seam { opacity: 0; transition: opacity 0.5s; }
-    .opened { visibility: hidden; }
 
     /* ═══════════════════════════════════════════
        MAIN CONTENT
@@ -146,10 +142,6 @@
     /* ═══════════════════════════════════════════
        SVG DECORATIVES
     ═══════════════════════════════════════════ */
-    .mandala-divider {
-      display: block; width: 100%; text-align: center;
-      padding: 2rem 0; overflow: visible;
-    }
     .ornament-line {
       display: flex; align-items: center; justify-content: center;
       gap: 18px; margin: 1rem auto 3rem;
@@ -157,7 +149,7 @@
     .ornament-line::before, .ornament-line::after {
       content: '';
       display: block; height: 1px;
-      width: clamp(40px, 8vw, 100px);
+      width: clamp(30px, 6vw, 100px);
       background: linear-gradient(to right, transparent, var(--gold));
     }
     .ornament-line::after { background: linear-gradient(to left, transparent, var(--gold)); }
@@ -175,8 +167,6 @@
       text-align: center; padding: 3rem 1.5rem 6rem;
       position: relative; overflow: hidden;
     }
-
-    /* Hero background mandala pattern */
     #hero::before {
       content: '';
       position: absolute; inset: 0;
@@ -187,19 +177,17 @@
       background-size: 600px 600px;
       background-position: center;
     }
-
-    /* Corner decorations */
     #hero::after {
       content: '';
       position: absolute; inset: 0; pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cpath d='M0 0 Q90 0 90 90' fill='none' stroke='%23c8891f' stroke-width='1' opacity='0.35'/%3E%3Cpath d='M0 0 Q60 0 60 60' fill='none' stroke='%23c8891f' stroke-width='0.7' opacity='0.3'/%3E%3Cpath d='M0 0 Q30 0 30 30' fill='none' stroke='%23c8891f' stroke-width='0.5' opacity='0.25'/%3E%3Ccircle cx='0' cy='0' r='8' fill='%23c8891f' opacity='0.3'/%3E%3C/svg%3E");
       background-position: top left, top right, bottom left, bottom right;
       background-repeat: no-repeat;
-      background-size: 180px 180px;
+      background-size: min(180px, 30vw) min(180px, 30vw);
     }
 
     .hero-ganesh {
-      width: 90px; margin-bottom: 0.5rem; position: relative; z-index: 1;
+      width: clamp(60px, 12vw, 90px); margin-bottom: 0.5rem; position: relative; z-index: 1;
       filter: drop-shadow(0 0 20px rgba(245,216,122,0.4));
       animation: float-ganesh 4s ease-in-out infinite;
     }
@@ -207,22 +195,23 @@
 
     .hero-invocation {
       font-family: 'Tiro Devanagari Hindi', serif;
-      color: var(--gold-ll); font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+      color: var(--gold-ll); font-size: clamp(0.7rem, 2vw, 0.95rem);
       line-height: 2; letter-spacing: 1px; position: relative; z-index: 1;
       text-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
     .hero-sub {
       font-family: 'Cinzel', serif;
-      font-size: clamp(0.55rem, 1.5vw, 0.75rem);
-      letter-spacing: 8px; color: var(--gold-l); opacity: 0.8;
+      font-size: clamp(0.45rem, 1.4vw, 0.75rem);
+      letter-spacing: clamp(3px, 1.5vw, 8px); color: var(--gold-l); opacity: 0.8;
       margin-top: 2.5rem; text-transform: uppercase;
       position: relative; z-index: 1;
+      max-width: 90vw;
     }
 
     .hero-names {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 12vw, 8rem);
+      font-size: clamp(3rem, 14vw, 8rem);
       font-weight: 300; color: #fff; line-height: 1;
       margin: 0.6rem 0;
       text-shadow: 0 4px 30px rgba(0,0,0,0.3), 0 0 60px rgba(200,137,31,0.15);
@@ -237,29 +226,31 @@
 
     .hero-date {
       font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-size: clamp(1.2rem, 4vw, 2.2rem);
       color: var(--gold-l); margin: 0.8rem 0;
       text-shadow: 0 2px 10px rgba(0,0,0,0.3);
       position: relative; z-index: 1;
     }
     .hero-date-en {
       font-family: 'Cinzel', serif;
-      font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-      letter-spacing: 5px; color: var(--gold-ll); opacity: 0.7;
+      font-size: clamp(0.5rem, 1.5vw, 0.8rem);
+      letter-spacing: clamp(2px, 1vw, 5px); color: var(--gold-ll); opacity: 0.7;
       position: relative; z-index: 1;
     }
 
     /* Countdown */
     .timer {
-      display: flex; gap: 12px; margin-top: 2.5rem;
+      display: flex; gap: clamp(6px, 2vw, 12px); margin-top: 2.5rem;
       position: relative; z-index: 1;
+      flex-wrap: nowrap;
     }
     .t-box {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(200,137,31,0.4);
       backdrop-filter: blur(10px);
-      padding: 18px 16px 12px; border-radius: 10px;
-      min-width: 78px; text-align: center;
+      padding: clamp(10px, 3vw, 18px) clamp(8px, 2.5vw, 16px) clamp(8px, 2vw, 12px);
+      border-radius: 10px;
+      min-width: clamp(58px, 16vw, 78px); text-align: center;
       position: relative; overflow: hidden;
     }
     .t-box::before {
@@ -268,11 +259,11 @@
     }
     .t-no {
       display: block; font-family: 'Cinzel', serif;
-      font-size: 2rem; font-weight: 600; color: var(--gold-ll);
+      font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 600; color: var(--gold-ll);
       line-height: 1; text-shadow: 0 0 20px rgba(245,216,122,0.5);
     }
-    .t-sep { font-size: 2rem; color: var(--gold-l); align-self: flex-start; padding-top: 18px; opacity: 0.5; }
-    .t-lab { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-l); opacity: 0.7; margin-top: 6px; display: block; }
+    .t-sep { font-size: clamp(1.2rem, 4vw, 2rem); color: var(--gold-l); align-self: flex-start; padding-top: clamp(10px, 3vw, 18px); opacity: 0.5; }
+    .t-lab { font-family: 'Cinzel', serif; font-size: clamp(0.38rem, 1vw, 0.5rem); letter-spacing: 2px; text-transform: uppercase; color: var(--gold-l); opacity: 0.7; margin-top: 6px; display: block; }
 
     /* Scroll indicator */
     .scroll-cue {
@@ -287,23 +278,23 @@
     /* ═══════════════════════════════════════════
        SECTIONS
     ═══════════════════════════════════════════ */
-    .sec { padding: 7rem 0; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .sec { padding: clamp(4rem, 8vw, 7rem) 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
 
     .sec-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-size: clamp(1.9rem, 6vw, 3.8rem);
       font-weight: 300;
       color: var(--maroon); line-height: 1.1; text-align: center;
     }
     .sec-title em { font-style: italic; color: var(--gold); }
 
     /* ═══════════════════════════════════════════
-       STORY / INTRO BAND
+       INTRO BAND
     ═══════════════════════════════════════════ */
     #intro {
       background: linear-gradient(135deg, var(--maroon-d) 0%, var(--maroon) 100%);
-      padding: 6rem 24px;
+      padding: clamp(4rem, 8vw, 6rem) clamp(20px, 6vw, 24px);
       text-align: center; position: relative; overflow: hidden;
     }
     #intro::before {
@@ -314,25 +305,26 @@
     }
     #intro .quote {
       font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-style: italic; font-size: clamp(1.15rem, 4vw, 2.2rem);
       color: var(--gold-ll); max-width: 700px; margin: 0 auto;
-      line-height: 1.6; position: relative; z-index: 1;
+      line-height: 1.7; position: relative; z-index: 1;
+      padding: 0 28px;
     }
     #intro .quote::before, #intro .quote::after {
-      content: '"'; font-size: 5rem; color: var(--gold); opacity: 0.2;
+      content: '"'; font-size: clamp(3rem, 8vw, 5rem); color: var(--gold); opacity: 0.2;
       position: absolute; font-family: 'Cormorant Garamond', serif; line-height: 0.7;
     }
-    #intro .quote::before { top: 0; left: -20px; }
-    #intro .quote::after { content: '"'; bottom: -1rem; right: -20px; }
-    #intro .hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold-l); font-size: 1rem; margin-top: 2rem; opacity: 0.8; position: relative; z-index: 1; }
+    #intro .quote::before { top: 0; left: -4px; }
+    #intro .quote::after { content: '"'; bottom: -1rem; right: -4px; }
+    #intro .hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold-l); font-size: clamp(0.85rem, 2.5vw, 1rem); margin-top: 2rem; opacity: 0.8; position: relative; z-index: 1; }
 
     /* ═══════════════════════════════════════════
        GALLERY — POLAROID STACK
     ═══════════════════════════════════════════ */
     #gallery { background: var(--cream); }
-    .gallery-container { display: flex; align-items: flex-start; gap: 60px; flex-wrap: wrap; justify-content: center; }
+    .gallery-container { display: flex; align-items: flex-start; gap: 40px; flex-wrap: wrap; justify-content: center; }
     .gallery-stack {
-      position: relative; width: 300px; height: 520px; flex-shrink: 0;
+      position: relative; width: min(300px, 88vw); height: 520px; flex-shrink: 0;
     }
     .polaroid {
       background: white;
@@ -352,19 +344,19 @@
       font-style: italic; color: #666; font-size: 0.85rem;
       margin-top: 8px; letter-spacing: 0.5px;
     }
-    .polaroid.p1 { transform: rotate(-9deg) translateY(10px); top: 20px; left: 10px; z-index: 3; width: 240px; }
-    .polaroid.p2 { transform: rotate(7deg); top: 60px; right: 0; z-index: 2; width: 240px; }
-    .polaroid.p3 { transform: rotate(-2deg); bottom: 0; left: 30px; z-index: 1; width: 250px; }
+    .polaroid.p1 { transform: rotate(-9deg) translateY(10px); top: 20px; left: 10px; z-index: 3; width: min(240px, 75vw); }
+    .polaroid.p2 { transform: rotate(7deg); top: 60px; right: 0; z-index: 2; width: min(240px, 75vw); }
+    .polaroid.p3 { transform: rotate(-2deg); bottom: 0; left: 30px; z-index: 1; width: min(250px, 78vw); }
     .polaroid.p1:hover { transform: rotate(-2deg) scale(1.04); }
     .polaroid.p2:hover { transform: rotate(2deg) scale(1.04); }
     .polaroid.p3:hover { transform: rotate(0deg) scale(1.04); }
 
     .gallery-message {
-      max-width: 380px; padding-top: 40px;
+      max-width: 380px; padding-top: 20px;
     }
     .gallery-message p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
       line-height: 1.9; color: #4a2828; font-weight: 300;
     }
     .signature {
@@ -379,9 +371,9 @@
     #parents .sec-title { color: var(--gold-ll); }
     #parents .sec-title em { color: var(--gold); }
 
-    .family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; max-width: 900px; margin: 3rem auto 0; }
+    .family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 2px; max-width: 900px; margin: 3rem auto 0; }
     .family-card {
-      padding: 3.5rem 2.5rem;
+      padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 2.5rem);
       position: relative; text-align: center;
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(200,137,31,0.2);
@@ -392,13 +384,13 @@
       background: linear-gradient(to right, transparent, var(--gold-l), transparent);
     }
     .family-side {
-      font-family: 'Cinzel', serif; font-size: 0.6rem;
+      font-family: 'Cinzel', serif; font-size: clamp(0.5rem, 1.5vw, 0.6rem);
       letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 2rem;
     }
     .family-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
     .family-names {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem; font-weight: 600;
+      font-size: clamp(1.1rem, 3vw, 1.45rem); font-weight: 600;
       color: var(--gold-lll); line-height: 1.5;
     }
     .family-names span { color: var(--gold-l); font-weight: 300; font-style: italic; display: block; font-size: 0.9em; margin: 0.3rem 0; }
@@ -416,8 +408,10 @@
 
     .events-wrapper { display: flex; flex-direction: column; gap: 2px; max-width: 860px; margin: 3rem auto 0; }
     .event-card {
-      display: grid; grid-template-columns: auto 1fr auto;
-      align-items: center; gap: 2.5rem; padding: 3rem 2.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center; gap: clamp(1rem, 3vw, 2.5rem);
+      padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem);
       background: white; border: 1px solid var(--parch);
       border-left: 4px solid var(--gold);
       box-shadow: 0 4px 20px rgba(0,0,0,0.04);
@@ -429,25 +423,36 @@
       content: '';
       position: absolute; right: 0; top: 0; bottom: 0; width: 4px;
       background: linear-gradient(to bottom, var(--maroon), var(--gold));
-      opacity: 0;
-      transition: opacity 0.3s;
+      opacity: 0; transition: opacity 0.3s;
     }
     .event-card:hover::after { opacity: 1; }
-    .event-icon { font-size: 3.2rem; }
-    .event-body { }
-    .event-name { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; color: var(--maroon); }
-    .event-hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold); font-size: 1rem; margin-top: 2px; }
+    .event-icon { font-size: clamp(2rem, 6vw, 3.2rem); }
+    .event-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 600; color: var(--maroon); }
+    .event-hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold); font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 2px; }
     .event-time { text-align: right; }
-    .event-day { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 3px; color: #888; }
-    .event-hour { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--maroon); line-height: 1; }
+    .event-day { font-family: 'Cinzel', serif; font-size: clamp(0.45rem, 1.2vw, 0.6rem); letter-spacing: 2px; color: #888; }
+    .event-hour { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 600; color: var(--maroon); line-height: 1; }
     .event-hour span { font-size: 0.7em; font-weight: 300; color: var(--gold); }
+
+    /* Mobile: stack time below name */
+    @media (max-width: 480px) {
+      .event-card {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+      }
+      .event-time {
+        grid-column: 2;
+        text-align: left;
+        margin-top: 4px;
+      }
+    }
 
     .love-btn {
       display: inline-flex; align-items: center; gap: 12px;
-      margin-top: 3rem; padding: 20px 55px;
+      margin-top: 3rem; padding: clamp(14px, 3vw, 20px) clamp(30px, 8vw, 55px);
       background: linear-gradient(135deg, var(--gold), var(--gold-l));
       color: var(--maroon-d); font-family: 'Cinzel', serif;
-      font-size: 0.75rem; font-weight: 600; letter-spacing: 3px;
+      font-size: clamp(0.6rem, 1.8vw, 0.75rem); font-weight: 600; letter-spacing: 3px;
       border: none; border-radius: 60px; cursor: pointer;
       box-shadow: 0 8px 30px rgba(200,137,31,0.35);
       transition: all 0.3s ease;
@@ -459,7 +464,7 @@
     ═══════════════════════════════════════════ */
     #venue {
       background: linear-gradient(160deg, var(--maroon) 0%, var(--maroon-d) 100%);
-      padding: 8rem 24px; text-align: center;
+      padding: clamp(5rem, 10vw, 8rem) clamp(16px, 5vw, 24px); text-align: center;
       position: relative; overflow: hidden;
     }
     #venue::before {
@@ -470,12 +475,12 @@
     }
     .venue-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.4rem, 7vw, 4rem);
+      font-size: clamp(2rem, 7vw, 4rem);
       color: var(--gold-ll); font-weight: 300;
       position: relative; z-index: 1;
     }
     .venue-address {
-      font-size: 1.15rem; color: rgba(253,240,194,0.8);
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem); color: rgba(253,240,194,0.8);
       line-height: 2; margin: 1.5rem auto;
       max-width: 480px; position: relative; z-index: 1;
       font-style: italic;
@@ -487,33 +492,30 @@
     }
     .map-btn {
       display: inline-flex; align-items: center; gap: 10px;
-      padding: 18px 48px;
+      padding: clamp(14px, 3vw, 18px) clamp(28px, 6vw, 48px);
       background: rgba(255,255,255,0.08);
       border: 1px solid var(--gold-l);
       color: var(--gold-ll); text-decoration: none;
-      font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 4px;
+      font-family: 'Cinzel', serif; font-size: clamp(0.55rem, 1.5vw, 0.7rem); letter-spacing: 4px;
       border-radius: 60px; transition: all 0.3s;
       position: relative; z-index: 1;
     }
     .map-btn:hover { background: rgba(200,137,31,0.2); }
 
     /* ═══════════════════════════════════════════
-       RSVP / FOOTER
+       FOOTER
     ═══════════════════════════════════════════ */
     footer {
       background: linear-gradient(170deg, var(--maroon-d) 0%, #120105 100%);
       padding: 0 0 140px;
       text-align: center;
-      border-top: none;
       position: relative; overflow: hidden;
     }
-    /* Top gold border */
     footer::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 4px;
       background: linear-gradient(to right, transparent, var(--gold-l), var(--gold), var(--gold-ll), var(--gold), var(--gold-l), transparent);
     }
-    /* Background mandala watermark */
     footer::after {
       content: '';
       position: absolute; inset: 0; pointer-events: none;
@@ -523,19 +525,18 @@
       background-size: min(100%, 500px);
     }
 
-    /* Top banner ribbon */
     .footer-ribbon {
       background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-m) 100%);
       border-bottom: 1px solid rgba(200,137,31,0.2);
-      padding: 3.5rem 2rem 3rem;
+      padding: clamp(2.5rem, 5vw, 3.5rem) clamp(16px, 5vw, 2rem) 3rem;
       position: relative; z-index: 1;
     }
     .footer-ribbon-row {
       display: flex; align-items: center; justify-content: center;
-      gap: 20px; flex-wrap: wrap; margin-bottom: 1.5rem;
+      gap: clamp(12px, 3vw, 20px); flex-wrap: wrap; margin-bottom: 1.5rem;
     }
     .footer-diya {
-      font-size: 2.4rem; animation: diya-flicker 2.5s ease-in-out infinite; display: inline-block;
+      font-size: clamp(1.6rem, 5vw, 2.4rem); animation: diya-flicker 2.5s ease-in-out infinite; display: inline-block;
     }
     @keyframes diya-flicker {
       0%,100%{transform:scale(1) rotate(-2deg);filter:drop-shadow(0 0 8px rgba(245,216,122,0.4))}
@@ -543,41 +544,40 @@
     }
     .footer-ribbon-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      font-size: clamp(2rem, 7vw, 4.5rem);
       font-weight: 300; font-style: italic;
       color: var(--gold-lll); line-height: 1;
       text-shadow: 0 0 40px rgba(200,137,31,0.25);
     }
     .footer-ribbon-sub {
-      font-family: 'Cinzel', serif; font-size: 0.6rem;
-      letter-spacing: 5px; color: var(--gold-l); opacity: 0.7;
+      font-family: 'Cinzel', serif; font-size: clamp(0.45rem, 1.3vw, 0.6rem);
+      letter-spacing: clamp(3px, 1vw, 5px); color: var(--gold-l); opacity: 0.7;
       margin-top: 0.6rem;
     }
 
-    /* Info grid */
     .footer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(160px, 45%), 1fr));
       gap: 0; max-width: 860px; margin: 0 auto;
       border: 1px solid rgba(200,137,31,0.15);
       border-top: none;
       position: relative; z-index: 1;
     }
     .footer-cell {
-      padding: 2.5rem 2rem;
+      padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2rem);
       border-right: 1px solid rgba(200,137,31,0.12);
       border-bottom: 1px solid rgba(200,137,31,0.12);
     }
     .footer-cell:last-child { border-right: none; }
     .footer-cell-icon { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
     .footer-cell-label {
-      font-family: 'Cinzel', serif; font-size: 0.5rem;
+      font-family: 'Cinzel', serif; font-size: clamp(0.42rem, 1.2vw, 0.5rem);
       letter-spacing: 4px; color: var(--gold); opacity: 0.7;
       text-transform: uppercase; margin-bottom: 0.5rem;
     }
     .footer-cell-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-weight: 600; color: var(--gold-lll);
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem); font-weight: 600; color: var(--gold-lll);
       line-height: 1.5;
     }
     .footer-cell-value em {
@@ -585,25 +585,23 @@
       color: rgba(245,216,122,0.6); font-size: 0.9em;
     }
 
-    /* Marathi blessing band */
     .footer-blessing {
-      padding: 3rem 2rem;
+      padding: clamp(2rem, 4vw, 3rem) clamp(16px, 5vw, 2rem);
       position: relative; z-index: 1;
       border-top: 1px solid rgba(200,137,31,0.1);
     }
     .footer-marathi {
       font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-size: clamp(1rem, 3vw, 1.8rem);
       color: var(--gold-l); margin-bottom: 1rem;
       text-shadow: 0 0 20px rgba(200,137,31,0.2);
     }
     .footer-tagline {
       font-family: 'Cormorant Garamond', serif; font-style: italic;
-      font-size: 1.1rem; color: rgba(253,240,194,0.6);
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem); color: rgba(253,240,194,0.6);
       max-width: 480px; margin: 0 auto; line-height: 1.8;
     }
 
-    /* Bottom strip */
     .footer-bottom {
       padding: 2rem 1.5rem 1rem;
       border-top: 1px solid rgba(200,137,31,0.08);
@@ -611,30 +609,31 @@
     }
     .footer-hearts { font-size: 1rem; letter-spacing: 6px; margin-bottom: 1rem; opacity: 0.5; }
     .footer-date {
-      font-family: 'Cinzel', serif; font-size: 0.5rem;
-      letter-spacing: 5px; color: rgba(200,137,31,0.35);
+      font-family: 'Cinzel', serif; font-size: clamp(0.42rem, 1.2vw, 0.5rem);
+      letter-spacing: clamp(2px, 1vw, 5px); color: rgba(200,137,31,0.35);
     }
-    .footer-couple { display: none; } /* replaced by ribbon title */
 
     /* ═══════════════════════════════════════════
-       NAV BAR
+       IMPROVED NAV BAR
     ═══════════════════════════════════════════ */
     nav {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      z-index: 500; display: flex; gap: 6px; padding: 8px 16px;
-      background: rgba(61,7,22,0.92); backdrop-filter: blur(12px);
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 500; display: flex; gap: 2px; padding: 6px 10px;
+      background: rgba(61,7,22,0.94); backdrop-filter: blur(12px);
       border: 1px solid rgba(200,137,31,0.35);
       border-radius: 60px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      max-width: calc(100vw - 32px);
     }
     nav a {
       color: rgba(245,216,122,0.7); text-decoration: none;
-      font-family: 'Cinzel', serif; font-size: 0.55rem;
-      font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-      padding: 8px 12px; border-radius: 40px;
-      transition: all 0.25s;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.42rem, 1.3vw, 0.55rem);
+      font-weight: 600; letter-spacing: clamp(1px, 0.5vw, 2px); text-transform: uppercase;
+      padding: clamp(6px, 1.5vw, 8px) clamp(7px, 2vw, 12px); border-radius: 40px;
+      transition: all 0.25s; white-space: nowrap;
     }
-    nav a:hover { color: var(--gold-ll); background: rgba(200,137,31,0.15); }
+    nav a:hover, nav a.active { color: var(--gold-ll); background: rgba(200,137,31,0.15); }
 
     /* ═══════════════════════════════════════════
        PETALS & HEARTS
@@ -653,34 +652,29 @@
     .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
     .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
-    @media (max-width: 640px) {
-      .event-card { grid-template-columns: auto 1fr; }
-      .event-time { grid-column: 2; text-align: left; }
-      .gallery-container { gap: 30px; }
-    }
-
     /* ═══════════════════════════════════════════
        MUSIC PLAYER
     ═══════════════════════════════════════════ */
     #music-player {
-      position: fixed; top: 24px; right: 24px; z-index: 600;
-      display: flex; align-items: center; gap: 12px;
+      position: fixed; top: 16px; right: 16px; z-index: 600;
+      display: flex; align-items: center; gap: 10px;
       background: rgba(61,7,22,0.92); backdrop-filter: blur(14px);
       border: 1px solid rgba(200,137,31,0.4);
-      border-radius: 60px; padding: 10px 20px 10px 10px;
+      border-radius: 60px; padding: 8px 16px 8px 8px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.4);
       opacity: 0; transform: translateY(-20px);
       transition: opacity 0.8s ease 2s, transform 0.8s ease 2s;
       cursor: pointer; user-select: none;
+      max-width: calc(100vw - 32px);
     }
     #music-player.show { opacity: 1; transform: translateY(0); }
 
     .mp-btn {
-      width: 40px; height: 40px; border-radius: 50%;
+      width: 36px; height: 36px; border-radius: 50%;
       background: linear-gradient(135deg, var(--gold), var(--gold-l));
       border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; flex-shrink: 0;
+      font-size: 0.9rem; flex-shrink: 0;
       box-shadow: 0 4px 14px rgba(200,137,31,0.4);
       transition: transform 0.2s;
     }
@@ -688,15 +682,14 @@
 
     .mp-info { display: flex; flex-direction: column; }
     .mp-title {
-      font-family: 'Cinzel', serif; font-size: 0.6rem;
+      font-family: 'Cinzel', serif; font-size: clamp(0.48rem, 1.3vw, 0.6rem);
       letter-spacing: 2px; color: var(--gold-ll);
     }
     .mp-sub {
       font-family: 'IM Fell English', serif; font-style: italic;
-      font-size: 0.65rem; color: rgba(245,216,122,0.6); margin-top: 1px;
+      font-size: clamp(0.55rem, 1.4vw, 0.65rem); color: rgba(245,216,122,0.6); margin-top: 1px;
     }
 
-    /* Equaliser bars — animated when playing */
     .mp-bars {
       display: flex; align-items: flex-end; gap: 2px; height: 18px; margin-left: 4px;
     }
@@ -726,7 +719,6 @@
       border: 1px solid rgba(200,137,31,0.35);
       border-radius: 4px;
     }
-    /* Ornamental corners */
     .map-corner {
       position: absolute; width: 28px; height: 28px;
       border-color: var(--gold-l); border-style: solid; opacity: 0.8;
@@ -737,39 +729,36 @@
     .map-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
     .map-osm {
-      position: relative; width: 100%; height: 340px; overflow: hidden;
+      position: relative; width: 100%;
+      height: clamp(220px, 40vw, 340px);
+      overflow: hidden;
       border-radius: 2px; background: #d4c5a9;
     }
-    .map-img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      filter: sepia(25%) saturate(85%) hue-rotate(8deg) brightness(0.95);
-      transition: filter 0.4s;
+    .map-fallback-wrap {
+      width: 100%; height: 100%; display: block;
     }
-    .map-osm:hover .map-img { filter: sepia(0%) saturate(100%) brightness(1); }
     .map-overlay {
       position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(to bottom, transparent 50%, rgba(61,7,22,0.35) 100%);
     }
-
-    /* Floating info card over the map */
     .map-pin-card {
-      position: absolute; bottom: 28px; left: 28px;
+      position: absolute; bottom: 16px; left: 16px;
       background: rgba(61,7,22,0.92); backdrop-filter: blur(12px);
       border: 1px solid rgba(200,137,31,0.4);
-      border-radius: 10px; padding: 12px 18px;
-      display: flex; align-items: center; gap: 12px;
+      border-radius: 10px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      max-width: calc(100% - 32px);
     }
-    .map-pin-icon { font-size: 1.5rem; }
+    .map-pin-icon { font-size: 1.3rem; flex-shrink: 0; }
     .map-pin-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem; font-weight: 600; color: var(--gold-ll);
+      font-size: clamp(0.85rem, 2.5vw, 1rem); font-weight: 600; color: var(--gold-ll);
     }
     .map-pin-addr {
-      font-family: 'Cinzel', serif; font-size: 0.55rem;
+      font-family: 'Cinzel', serif; font-size: clamp(0.42rem, 1.2vw, 0.55rem);
       letter-spacing: 1px; color: rgba(245,216,122,0.6); margin-top: 2px;
     }
-
     .map-actions {
       display: flex; gap: 14px; justify-content: center;
       margin-top: 2rem; flex-wrap: wrap;
@@ -781,18 +770,13 @@
     }
     .map-btn-alt:hover { background: rgba(200,137,31,0.15) !important; }
 
-    @media (max-width: 480px) {
-      .map-iframe { height: 260px; }
-      .map-pin-card { display: none; }
-    }
-
   </style>
 </head>
-<body onclick="openDoors()">
+<body>
 
   <!-- ══ DOOR ENTRANCE ══ -->
   <div id="door-seam"></div>
-  <div id="door-wrapper">
+  <div id="door-wrapper" onclick="openDoors()">
     <div class="door door-left">
       <div class="door-panel">
         <div class="door-arch"></div>
@@ -821,7 +805,7 @@
 
   <main>
     <!-- ══ MUSIC PLAYER ══ -->
-    <div id="music-player" onclick="toggleMusic()">
+    <div id="music-player" onclick="toggleMusic(event)">
       <button class="mp-btn" id="mp-icon" aria-label="Toggle music">🎵</button>
       <div class="mp-info">
         <span class="mp-title">WEDDING SHEHNAI</span>
@@ -886,15 +870,15 @@
         <div class="gallery-container">
           <div class="gallery-stack">
             <div class="polaroid p1">
-              <img src="engage1.jpg" alt="Pic 1" onerror="this.style.background='linear-gradient(135deg,#fdf6ec,#e8d5b0)';this.style.height='220px';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.alt='🌸';this.src='';this.outerHTML='<div style=\'background:linear-gradient(135deg,#fdf6ec,#e8d5b0);height:220px;display:flex;align-items:center;justify-content:center;font-size:3rem;\'>🌸</div>'">
+              <div style="background:linear-gradient(135deg,#fdf6ec,#e8d5b0);height:220px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🌸</div>
               <p class="cap">The First Step</p>
             </div>
             <div class="polaroid p2">
-              <img src="engage2.jpg" alt="Pic 2" onerror="this.outerHTML='<div style=\'background:linear-gradient(135deg,#fdf6ec,#d4b896);height:220px;display:flex;align-items:center;justify-content:center;font-size:3rem;\'>💍</div>'">
+              <div style="background:linear-gradient(135deg,#fdf6ec,#d4b896);height:220px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;">💍</div>
               <p class="cap">Two Hearts</p>
             </div>
             <div class="polaroid p3">
-              <img src="engage3.jpg" alt="Pic 3" onerror="this.outerHTML='<div style=\'background:linear-gradient(135deg,#fdf6ec,#c9a07a);height:220px;display:flex;align-items:center;justify-content:center;font-size:3rem;\'>🪔</div>'">
+              <div style="background:linear-gradient(135deg,#fdf6ec,#c9a07a);height:220px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🪔</div>
               <p class="cap">Eternal Love</p>
             </div>
           </div>
@@ -977,34 +961,68 @@
     <!-- ══ VENUE ══ -->
     <section id="venue">
       <div class="reveal">
-        <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:6px;color:var(--gold-l);opacity:0.7;margin-bottom:2rem;">THE CELEBRATION WILL BE HELD AT</p>
+        <p style="font-family:'Cinzel',serif;font-size:clamp(0.48rem,1.3vw,0.6rem);letter-spacing:6px;color:var(--gold-l);opacity:0.7;margin-bottom:2rem;">THE CELEBRATION WILL BE HELD AT</p>
         <div class="venue-name">Shree Ram Palace</div>
         <div class="venue-divider"></div>
         <p class="venue-address">National Highway 4, Kashil<br>Satara, Maharashtra</p>
 
-        <!-- MAP CARD -->
         <div class="map-wrapper">
           <div class="map-frame-border">
             <div class="map-corner tl"></div>
             <div class="map-corner tr"></div>
             <div class="map-corner bl"></div>
             <div class="map-corner br"></div>
-
-            <!-- OpenStreetMap static tile — works without hosting -->
             <div class="map-osm" id="mapCanvas">
-              <img
-                src="https://staticmap.openstreetmap.de/staticmap.php?center=17.6805,74.0400&zoom=14&size=720x340&maptype=mapnik&markers=17.6805,74.0400,red-pushpin"
-                alt="Shree Ram Palace location map"
-                class="map-img"
-                onerror="this.parentElement.innerHTML=fallbackMap()"
-              />
-              <!-- Overlay gradient for depth -->
+              <!-- SVG illustrated map — no external image needed, always works -->
+              <svg class="map-fallback-wrap" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#c8b89a"/><stop offset="100%" stop-color="#e8d5b0"/>
+                  </linearGradient>
+                  <linearGradient id="road" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#b8a888"/><stop offset="50%" stop-color="#c8b898"/><stop offset="100%" stop-color="#b8a888"/>
+                  </linearGradient>
+                </defs>
+                <rect width="720" height="340" fill="url(#sky)"/>
+                <rect x="0" y="200" width="720" height="140" fill="#b8a87a" opacity="0.5"/>
+                <rect x="0" y="155" width="720" height="38" fill="url(#road)"/>
+                <line x1="0" y1="174" x2="720" y2="174" stroke="#d4c4a0" stroke-width="2" stroke-dasharray="30,20"/>
+                <rect x="20" y="158" width="70" height="22" rx="4" fill="#7b6a4a" opacity="0.7"/>
+                <text x="55" y="173" font-family="sans-serif" font-size="11" fill="#f5e8c0" text-anchor="middle" font-weight="bold">NH - 4</text>
+                <circle cx="80" cy="148" r="18" fill="#6b8a4a" opacity="0.8"/>
+                <circle cx="110" cy="152" r="14" fill="#5a7a3a" opacity="0.8"/>
+                <circle cx="150" cy="146" r="16" fill="#7a9a5a" opacity="0.7"/>
+                <circle cx="600" cy="148" r="18" fill="#6b8a4a" opacity="0.8"/>
+                <circle cx="630" cy="152" r="14" fill="#5a7a3a" opacity="0.8"/>
+                <circle cx="660" cy="146" r="16" fill="#7a9a5a" opacity="0.7"/>
+                <rect x="295" y="72" width="130" height="88" rx="3" fill="#8c6a3a"/>
+                <rect x="285" y="68" width="150" height="12" rx="2" fill="#7b5a2a"/>
+                <polygon points="360,42 285,68 435,68" fill="#6b4a1a"/>
+                <polygon points="360,48 300,68 420,68" fill="#7b5a2a"/>
+                <ellipse cx="360" cy="44" rx="18" ry="10" fill="#c8891f" opacity="0.9"/>
+                <circle cx="360" cy="36" r="5" fill="#e4ab3a"/>
+                <rect x="308" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
+                <rect x="349" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
+                <rect x="390" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
+                <rect x="340" y="128" width="40" height="32" rx="3" fill="#5a3a1a"/>
+                <ellipse cx="360" cy="128" rx="20" ry="8" fill="#6b4a2a"/>
+                <rect x="275" y="115" width="12" height="45" fill="#7b6040"/>
+                <rect x="433" y="115" width="12" height="45" fill="#7b6040"/>
+                <rect x="271" y="112" width="20" height="8" rx="2" fill="#c8891f"/>
+                <rect x="429" y="112" width="20" height="8" rx="2" fill="#c8891f"/>
+                <rect x="285" y="74" width="150" height="20" rx="2" fill="rgba(61,7,22,0.75)"/>
+                <text x="360" y="88" font-family="Georgia,serif" font-size="11" fill="#f5d87a" text-anchor="middle" font-weight="bold">SHREE RAM PALACE</text>
+                <rect x="310" y="218" width="100" height="22" rx="11" fill="rgba(61,7,22,0.7)"/>
+                <text x="360" y="233" font-family="sans-serif" font-size="10" fill="#f5d87a" text-anchor="middle" letter-spacing="2">KASHIL, SATARA</text>
+                <circle cx="672" cy="48" r="22" fill="rgba(61,7,22,0.6)" stroke="#c8891f" stroke-width="1"/>
+                <text x="672" y="36" font-family="sans-serif" font-size="10" fill="#f5d87a" text-anchor="middle" font-weight="bold">N</text>
+                <polygon points="672,40 668,56 672,53 676,56" fill="#c8891f"/>
+                <polygon points="672,66 668,50 672,53 676,50" fill="#888" opacity="0.6"/>
+              </svg>
               <div class="map-overlay"></div>
             </div>
-
-            <!-- Floating pin card -->
             <div class="map-pin-card">
-              <span class="map-pin-icon">&#128205;</span>
+              <span class="map-pin-icon">📍</span>
               <div>
                 <div class="map-pin-name">Shree Ram Palace</div>
                 <div class="map-pin-addr">NH-4, Kashil, Satara, Maharashtra</div>
@@ -1014,11 +1032,11 @@
         </div>
 
         <div class="map-actions">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=17.6805,74.0400" target="_blank" class="map-btn">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=17.6805,74.0400" target="_blank" rel="noopener" class="map-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             GET DIRECTIONS
           </a>
-          <a href="https://maps.apple.com/?ll=17.6805,74.0400&q=Shree+Ram+Palace" target="_blank" class="map-btn map-btn-alt">
+          <a href="https://maps.apple.com/?ll=17.6805,74.0400&q=Shree+Ram+Palace" target="_blank" rel="noopener" class="map-btn map-btn-alt">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
             APPLE MAPS
           </a>
@@ -1028,8 +1046,6 @@
 
     <!-- ══ FOOTER ══ -->
     <footer>
-
-      <!-- Top ribbon: couple names + diyas -->
       <div class="footer-ribbon reveal">
         <div class="footer-ribbon-row">
           <span class="footer-diya">🪔</span>
@@ -1039,7 +1055,6 @@
         <p class="footer-ribbon-sub">TOGETHER · FOREVER · 7 MAY 2026</p>
       </div>
 
-      <!-- Info grid -->
       <div class="footer-grid reveal">
         <div class="footer-cell">
           <span class="footer-cell-icon">📅</span>
@@ -1063,18 +1078,15 @@
         </div>
       </div>
 
-      <!-- Blessing band -->
       <div class="footer-blessing reveal">
         <p class="footer-marathi">॥ आमच्या आनंदात सहभागी व्हा ॥</p>
         <p class="footer-tagline">"With the blessings of our families and the grace of God, we begin a new journey — and we want you by our side."</p>
       </div>
 
-      <!-- Bottom -->
       <div class="footer-bottom reveal">
         <div class="footer-hearts">🌸 &nbsp; 💛 &nbsp; 🌸 &nbsp; 💛 &nbsp; 🌸</div>
         <div class="footer-date">MAY 7, 2026 &nbsp;·&nbsp; SATARA, MAHARASHTRA &nbsp;·&nbsp; SHREE RAM PALACE</div>
       </div>
-
     </footer>
 
     <!-- ══ BOTTOM NAV ══ -->
@@ -1089,33 +1101,42 @@
 
   <script>
     /* ── DOOR ── */
-    /* Safety: show content even if openDoors never fires */
-    setTimeout(() => {
-      document.querySelector("main").style.opacity = "1";
-      document.querySelector("main").style.pointerEvents = "all";
-    }, 5000);
+    let doorsOpened = false;
+
+    // Fallback: reveal content after 6s if door not tapped
+    const fallbackTimer = setTimeout(() => {
+      if (!doorsOpened) openDoors();
+    }, 6000);
 
     function openDoors() {
+      if (doorsOpened) return;
+      doorsOpened = true;
+      clearTimeout(fallbackTimer);
+
       const wrapper = document.getElementById('door-wrapper');
-      if (!wrapper.classList.contains('opened')) {
-        wrapper.classList.add('opened');
-        startPetals();
-        startCountdown();
+      wrapper.classList.add('opened');
+
+      startPetals();
+      startCountdown();
+
+      setTimeout(() => {
+        document.getElementById('music-player').classList.add('show');
+        // Auto-start music after user gesture
         setTimeout(() => {
-          document.getElementById('music-player').classList.add('show');
-          // Auto-start music after door opens (user gesture already happened)
-          setTimeout(() => {
-            if (!musicPlaying) {
+          if (!musicPlaying) {
+            try {
               if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
               if (audioCtx.state === 'suspended') audioCtx.resume();
               musicPlaying = true;
               playMelody();
               document.getElementById('mp-icon').textContent = '🔊';
               document.getElementById('mp-bars').classList.add('playing');
+            } catch(e) {
+              console.warn('Audio init failed:', e);
             }
-          }, 400);
-        }, 2000);
-      }
+          }
+        }, 400);
+      }, 2000);
     }
 
     /* ── PETALS ── */
@@ -1136,20 +1157,18 @@
       }, 200);
     }
 
-    /* ── COUNTDOWN ── */
+    /* ── COUNTDOWN — only starts after door opens ── */
     function startCountdown() {
       const target = new Date("May 7, 2026 15:11:00").getTime();
       function tick() {
         const diff = target - Date.now();
         if (diff > 0) {
-          const d = Math.floor(diff / 86400000);
-          const h = Math.floor((diff % 86400000) / 3600000);
-          const m = Math.floor((diff % 3600000) / 60000);
-          const s = Math.floor((diff % 60000) / 1000);
-          document.getElementById('days').textContent  = String(d).padStart(2,'0');
-          document.getElementById('hrs').textContent   = String(h).padStart(2,'0');
-          document.getElementById('mins').textContent  = String(m).padStart(2,'0');
-          document.getElementById('secs').textContent  = String(s).padStart(2,'0');
+          document.getElementById('days').textContent  = String(Math.floor(diff / 86400000)).padStart(2,'0');
+          document.getElementById('hrs').textContent   = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+          document.getElementById('mins').textContent  = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+          document.getElementById('secs').textContent  = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+        } else {
+          ['days','hrs','mins','secs'].forEach(id => document.getElementById(id).textContent = '00');
         }
       }
       tick();
@@ -1158,115 +1177,97 @@
 
     /* ── SCROLL REVEAL ── */
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(r => obs.observe(r));
 
-    /* ── MUSIC ── */
-    let audioCtx = null, musicPlaying = false, musicNodes = [], musicLoop = null;
+    /* ── ACTIVE NAV HIGHLIGHT ── */
+    const sections = ['hero','intro','gallery','parents','ceremony','venue'];
+    const navLinks = document.querySelectorAll('nav a');
+    const sectionObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) sectionObs.observe(el);
+    });
 
-    // Shehnai-like melody using Web Audio API
-    // Scale: Bhairavi raga intervals (Sa Re Ga Ma Pa Dha Ni Sa)
+    /* ── MUSIC ── */
+    let audioCtx = null, musicPlaying = false, musicLoop = null;
+
     const MELODY = [
-      // freq (Hz), duration (s), gap after (s)
-      [392.0, 0.5, 0.05], // G4
-      [440.0, 0.4, 0.05], // A4
-      [493.9, 0.6, 0.1 ], // B4
-      [523.3, 0.8, 0.15], // C5
-      [587.3, 0.5, 0.05], // D5
-      [523.3, 0.4, 0.05], // C5
-      [493.9, 0.3, 0.05], // B4
-      [440.0, 0.6, 0.1 ], // A4
-      [392.0, 0.4, 0.05], // G4
-      [349.2, 0.5, 0.05], // F4
-      [329.6, 0.4, 0.05], // E4
-      [349.2, 0.3, 0.05], // F4
-      [392.0, 0.8, 0.2 ], // G4
-      [440.0, 0.5, 0.05], // A4
-      [493.9, 0.4, 0.05], // B4
-      [523.3, 1.0, 0.2 ], // C5
-      [493.9, 0.3, 0.05], // B4
-      [440.0, 0.4, 0.05], // A4
-      [392.0, 0.5, 0.05], // G4
-      [349.2, 1.2, 0.3 ], // F4 (held)
+      [392.0, 0.5, 0.05],[440.0, 0.4, 0.05],[493.9, 0.6, 0.1],[523.3, 0.8, 0.15],
+      [587.3, 0.5, 0.05],[523.3, 0.4, 0.05],[493.9, 0.3, 0.05],[440.0, 0.6, 0.1],
+      [392.0, 0.4, 0.05],[349.2, 0.5, 0.05],[329.6, 0.4, 0.05],[349.2, 0.3, 0.05],
+      [392.0, 0.8, 0.2],[440.0, 0.5, 0.05],[493.9, 0.4, 0.05],[523.3, 1.0, 0.2],
+      [493.9, 0.3, 0.05],[440.0, 0.4, 0.05],[392.0, 0.5, 0.05],[349.2, 1.2, 0.3],
     ];
 
     function createShehnaiNote(ctx, freq, startTime, duration) {
       const osc1 = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();  // slight detune for richness
-      const osc3 = ctx.createOscillator();  // harmonic overtone
-
+      const osc2 = ctx.createOscillator();
+      const osc3 = ctx.createOscillator();
       const gainNode = ctx.createGain();
       const filter = ctx.createBiquadFilter();
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
 
-      // Shehnai-like: sawtooth + triangle blend
-      osc1.type = 'sawtooth';
-      osc1.frequency.setValueAtTime(freq, startTime);
-      osc2.type = 'triangle';
-      osc2.frequency.setValueAtTime(freq * 1.003, startTime); // slight detune
-      osc3.type = 'sawtooth';
-      osc3.frequency.setValueAtTime(freq * 2.01, startTime);  // octave overtone
-
-      // Bandpass filter — gives the nasal shehnai character
+      osc1.type = 'sawtooth'; osc1.frequency.setValueAtTime(freq, startTime);
+      osc2.type = 'triangle'; osc2.frequency.setValueAtTime(freq * 1.003, startTime);
+      osc3.type = 'sawtooth'; osc3.frequency.setValueAtTime(freq * 2.01, startTime);
       filter.type = 'bandpass';
       filter.frequency.setValueAtTime(freq * 3.5, startTime);
       filter.Q.setValueAtTime(2.5, startTime);
-
-      // Vibrato via LFO
-      const lfo = ctx.createOscillator();
-      const lfoGain = ctx.createGain();
       lfo.frequency.setValueAtTime(5.5, startTime);
       lfoGain.gain.setValueAtTime(freq * 0.012, startTime);
       lfo.connect(lfoGain);
-      lfo.connect(osc1.frequency);
-      lfo.connect(osc2.frequency);
+      lfoGain.connect(osc1.frequency);
+      lfoGain.connect(osc2.frequency);
 
-      // Volume envelope: attack, sustain, release
       gainNode.gain.setValueAtTime(0, startTime);
-      gainNode.gain.linearRampToValueAtTime(0.18, startTime + 0.06);   // attack
-      gainNode.gain.setValueAtTime(0.15, startTime + duration * 0.7);  // sustain
-      gainNode.gain.linearRampToValueAtTime(0, startTime + duration);  // release
+      gainNode.gain.linearRampToValueAtTime(0.18, startTime + 0.06);
+      gainNode.gain.setValueAtTime(0.15, startTime + duration * 0.7);
+      gainNode.gain.linearRampToValueAtTime(0, startTime + duration);
 
-      osc1.connect(filter);
-      osc2.connect(filter);
-      osc3.connect(filter);
-      filter.connect(gainNode);
-      gainNode.connect(ctx.destination);
+      osc1.connect(filter); osc2.connect(filter); osc3.connect(filter);
+      filter.connect(gainNode); gainNode.connect(ctx.destination);
 
-      osc1.start(startTime); osc1.stop(startTime + duration + 0.05);
-      osc2.start(startTime); osc2.stop(startTime + duration + 0.05);
-      osc3.start(startTime); osc3.stop(startTime + duration + 0.05);
-      lfo.start(startTime); lfo.stop(startTime + duration + 0.05);
-
-      return [osc1, osc2, osc3, lfo, gainNode];
+      const end = startTime + duration + 0.05;
+      [osc1, osc2, osc3, lfo].forEach(n => { n.start(startTime); n.stop(end); });
     }
 
     function playMelody() {
       if (!audioCtx || !musicPlaying) return;
-
       let t = audioCtx.currentTime + 0.1;
-      let allNodes = [];
       MELODY.forEach(([freq, dur, gap]) => {
-        const nodes = createShehnaiNote(audioCtx, freq, t, dur);
-        allNodes.push(...nodes);
+        createShehnaiNote(audioCtx, freq, t, dur);
         t += dur + gap;
       });
-
-      // Schedule next loop
-      const totalDuration = MELODY.reduce((acc, [,d,g]) => acc + d + g, 0);
-      musicLoop = setTimeout(playMelody, totalDuration * 1000 - 200);
+      const total = MELODY.reduce((a, [,d,g]) => a + d + g, 0);
+      musicLoop = setTimeout(playMelody, total * 1000 - 200);
     }
 
-    function toggleMusic() {
-      event.stopPropagation(); // don't open doors
+    function toggleMusic(e) {
+      e.stopPropagation();
       if (!musicPlaying) {
-        // First play — create context
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        musicPlaying = true;
-        playMelody();
-        document.getElementById('mp-icon').textContent = '🔊';
-        document.getElementById('mp-bars').classList.add('playing');
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          musicPlaying = true;
+          playMelody();
+          document.getElementById('mp-icon').textContent = '🔊';
+          document.getElementById('mp-bars').classList.add('playing');
+        } catch(err) {
+          console.warn('Audio toggle failed:', err);
+        }
       } else {
         musicPlaying = false;
         clearTimeout(musicLoop);
@@ -1276,99 +1277,25 @@
       }
     }
 
-    /* ── MAP FALLBACK ── */
-    function fallbackMap() {
-      // Beautiful illustrated SVG map when image fails to load
-      return `<svg width="100%" height="340" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" style="display:block">
-        <defs>
-          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#c8b89a"/>
-            <stop offset="100%" stop-color="#e8d5b0"/>
-          </linearGradient>
-          <linearGradient id="road" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#b8a888"/>
-            <stop offset="50%" stop-color="#c8b898"/>
-            <stop offset="100%" stop-color="#b8a888"/>
-          </linearGradient>
-        </defs>
-        <!-- Background -->
-        <rect width="720" height="340" fill="url(#sky)"/>
-        <!-- Fields -->
-        <rect x="0" y="180" width="720" height="160" fill="#c4b48a" opacity="0.6"/>
-        <rect x="0" y="200" width="720" height="140" fill="#b8a87a" opacity="0.5"/>
-        <!-- NH4 Highway -->
-        <rect x="0" y="155" width="720" height="38" fill="url(#road)"/>
-        <rect x="0" y="170" width="720" height="8" fill="#a89868" opacity="0.5"/>
-        <!-- Dashed centre line -->
-        <line x1="0" y1="174" x2="720" y2="174" stroke="#d4c4a0" stroke-width="2" stroke-dasharray="30,20"/>
-        <!-- NH4 label -->
-        <rect x="20" y="158" width="70" height="22" rx="4" fill="#7b6a4a" opacity="0.7"/>
-        <text x="55" y="173" font-family="sans-serif" font-size="11" fill="#f5e8c0" text-anchor="middle" font-weight="bold">NH - 4</text>
-        <!-- Trees left -->
-        <circle cx="80" cy="148" r="18" fill="#6b8a4a" opacity="0.8"/>
-        <circle cx="110" cy="152" r="14" fill="#5a7a3a" opacity="0.8"/>
-        <circle cx="150" cy="146" r="16" fill="#7a9a5a" opacity="0.7"/>
-        <circle cx="600" cy="148" r="18" fill="#6b8a4a" opacity="0.8"/>
-        <circle cx="630" cy="152" r="14" fill="#5a7a3a" opacity="0.8"/>
-        <circle cx="660" cy="146" r="16" fill="#7a9a5a" opacity="0.7"/>
-        <!-- Venue building -->
-        <rect x="295" y="72" width="130" height="88" rx="3" fill="#8c6a3a"/>
-        <rect x="285" y="68" width="150" height="12" rx="2" fill="#7b5a2a"/>
-        <!-- Roof detail -->
-        <polygon points="360,42 285,68 435,68" fill="#6b4a1a"/>
-        <polygon points="360,48 300,68 420,68" fill="#7b5a2a"/>
-        <!-- Dome top -->
-        <ellipse cx="360" cy="44" rx="18" ry="10" fill="#c8891f" opacity="0.9"/>
-        <circle cx="360" cy="36" r="5" fill="#e4ab3a"/>
-        <!-- Windows -->
-        <rect x="308" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
-        <rect x="349" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
-        <rect x="390" y="90" width="22" height="28" rx="2" fill="#d4b87a" opacity="0.8"/>
-        <!-- Door -->
-        <rect x="340" y="128" width="40" height="32" rx="3" fill="#5a3a1a"/>
-        <ellipse cx="360" cy="128" rx="20" ry="8" fill="#6b4a2a"/>
-        <!-- Gate posts -->
-        <rect x="275" y="115" width="12" height="45" fill="#7b6040"/>
-        <rect x="433" y="115" width="12" height="45" fill="#7b6040"/>
-        <rect x="271" y="112" width="20" height="8" rx="2" fill="#c8891f"/>
-        <rect x="429" y="112" width="20" height="8" rx="2" fill="#c8891f"/>
-        <!-- Venue name banner -->
-        <rect x="285" y="74" width="150" height="20" rx="2" fill="rgba(61,7,22,0.75)"/>
-        <text x="360" y="88" font-family="Georgia,serif" font-size="11" fill="#f5d87a" text-anchor="middle" font-weight="bold">SHREE RAM PALACE</text>
-        <!-- Location pin -->
-        <circle cx="360" cy="32" r="14" fill="#6b1229" opacity="0.0"/>
-        <path d="M360 18 C353 18 347 24 347 31 C347 40 360 52 360 52 C360 52 373 40 373 31 C373 24 367 18 360 18Z" fill="#c8891f" opacity="0" />
-        <!-- Kashil label -->
-        <rect x="310" y="218" width="100" height="22" rx="11" fill="rgba(61,7,22,0.7)"/>
-        <text x="360" y="233" font-family="sans-serif" font-size="10" fill="#f5d87a" text-anchor="middle" letter-spacing="2">KASHIL, SATARA</text>
-        <!-- Compass -->
-        <circle cx="672" cy="48" r="22" fill="rgba(61,7,22,0.6)" stroke="#c8891f" stroke-width="1"/>
-        <text x="672" y="36" font-family="sans-serif" font-size="10" fill="#f5d87a" text-anchor="middle" font-weight="bold">N</text>
-        <polygon points="672,40 668,56 672,53 676,56" fill="#c8891f"/>
-        <polygon points="672,66 668,50 672,53 676,50" fill="#888" opacity="0.6"/>
-      </svg>`;
-    }
-
     /* ── HEARTS BURST ── */
     function spawnHearts() {
       const items = ['❤️','🌸','✨','💐','🌺','🪔','💛'];
       for (let i = 0; i < 30; i++) {
-        const el = document.createElement('div');
-        el.className = 'floater';
-        el.textContent = items[Math.floor(Math.random() * items.length)];
-        const startX = Math.random() * window.innerWidth;
-        el.style.left = startX + 'px';
-        el.style.bottom = '-50px';
-        el.style.fontSize = (Math.random() * 18 + 16) + 'px';
-        el.style.opacity = '1';
-        document.body.appendChild(el);
         setTimeout(() => {
-          el.style.bottom = (60 + Math.random() * 80) + 'vh';
-          el.style.left = (startX + (Math.random() * 120 - 60)) + 'px';
-          el.style.opacity = '0';
-          el.style.transform = `rotate(${Math.random()*360}deg) scale(${Math.random()*0.5+0.8})`;
-        }, 50);
-        setTimeout(() => el.remove(), 4000);
+          const el = document.createElement('div');
+          el.className = 'floater';
+          el.textContent = items[Math.floor(Math.random() * items.length)];
+          const startX = Math.random() * window.innerWidth;
+          el.style.cssText = `left:${startX}px;bottom:-50px;font-size:${Math.random()*18+16}px;opacity:1;`;
+          document.body.appendChild(el);
+          requestAnimationFrame(() => {
+            el.style.bottom = (60 + Math.random() * 80) + 'vh';
+            el.style.left = (startX + (Math.random() * 120 - 60)) + 'px';
+            el.style.opacity = '0';
+            el.style.transform = `rotate(${Math.random()*360}deg) scale(${Math.random()*0.5+0.8})`;
+          });
+          setTimeout(() => el.remove(), 4000);
+        }, i * 60);
       }
     }
   </script>
