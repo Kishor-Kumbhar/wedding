@@ -187,12 +187,23 @@
     }
 
     .hero-ganesh {
-      width: clamp(60px, 12vw, 90px); margin-bottom: 0.5rem; position: relative; z-index: 1;
-      filter: drop-shadow(0 0 20px rgba(245,216,122,0.4));
+      width: clamp(140px, 22vw, 260px);
+      margin-bottom: 0.8rem;
+      position: relative;
+      z-index: 1;
+
+      /* ✨ BLENDING MAGIC */
+      mix-blend-mode: screen;
+
+      /* ✨ SOFT GLOW */
+      filter:
+        drop-shadow(0 0 25px rgba(245,216,122,0.5))
+        drop-shadow(0 0 60px rgba(200,137,31,0.35));
+
+      opacity: 0.95;
+
       animation: float-ganesh 4s ease-in-out infinite;
     }
-    @keyframes float-ganesh { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-
     .hero-invocation {
       font-family: 'Tiro Devanagari Hindi', serif;
       color: var(--gold-ll); font-size: clamp(0.7rem, 2vw, 0.95rem);
@@ -428,7 +439,7 @@
     .event-card:hover::after { opacity: 1; }
     .event-icon { font-size: clamp(2rem, 6vw, 3.2rem); }
     .event-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 600; color: var(--maroon); }
-    .event-hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold); font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 2px; }
+    .event-hin { font-family: 'Tiro Devanagari Hindi', serif; color: var(--gold); font-size: clamp(1.2rem, 3.5vw, 1.8rem); margin-top: 2px; }
     .event-time { text-align: right; }
     .event-day { font-family: 'Cinzel', serif; font-size: clamp(0.45rem, 1.2vw, 0.6rem); letter-spacing: 2px; color: #888; }
     .event-hour { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 600; color: var(--maroon); line-height: 1; }
@@ -821,7 +832,7 @@
 
     <!-- ══ HERO ══ -->
     <section id="hero">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Ganesha_vector_with_no_background.svg/1024px-Ganesha_vector_with_no_background.svg.png" class="hero-ganesh" alt="Ganesha">
+      <img src="ganesha.png" class="hero-ganesh" alt="Ganesha">
       <div class="hero-invocation">
         <p>॥ श्री गणेशाय नमः ॥</p>
         <p>॥ श्री यदोबा देवाय नमः ॥</p>
@@ -869,24 +880,24 @@
         <div class="ornament-line"><span class="ornament-icon">✦</span><span class="ornament-icon">🌸</span><span class="ornament-icon">✦</span></div>
         <div class="gallery-container">
           <div class="gallery-stack">
-            <div class="gallery-stack">
   
-            <div class="polaroid p1">
-              <img src="Wed 1.jpg" alt="Kishor & Rutuja 1">
-              <p class="cap">The First Step</p>
-            </div>
-          
-            <div class="polaroid p2">
-              <img src="Wed 2.jpg" alt="Kishor & Rutuja 2">
-              <p class="cap">Two Hearts</p>
-            </div>
-          
-            <div class="polaroid p3">
-              <img src="Wed 3.jpg" alt="Kishor & Rutuja 3">
-              <p class="cap">Eternal Love</p>
-            </div>
-          
+          <div class="polaroid p1">
+            <img src="Wed 1.jpg" alt="Kishor & Rutuja 1">
+            <p class="cap">The First Step</p>
           </div>
+
+          <div class="polaroid p2">
+            <img src="Wed 2.jpg" alt="Kishor & Rutuja 2">
+            <p class="cap">Two Hearts</p>
+          </div>
+
+          <div class="polaroid p3">
+            <img src="Wed 3.jpg" alt="Kishor & Rutuja 3">
+            <p class="cap">Eternal Love</p>
+          </div>
+
+        </div>
+                  </div>
           <div class="gallery-message">
             <p>With hearts full of love and homes full of blessings, we joyfully invite you to witness the union of our beloved Kishor and Rutuja.</p>
             <p style="margin-top:1.2rem;">Your presence will make our celebration complete.</p>
