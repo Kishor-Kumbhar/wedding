@@ -1031,12 +1031,12 @@
     </div>
 
     <div id="rsvp-ty" style="display:none;text-align:center;padding:48px 24px">
-      <div style="font-size:48px;margin-bottom:16px" id="rty-icon">🎉</div>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:300;font-style:italic;color:var(--gold-lll);margin-bottom:10px" id="rty-title">See you on May 7th!</h3>
-      <p style="color:var(--gold-l);opacity:0.85;font-size:15px;line-height:1.8" id="rty-msg">Thank you for responding. We're so excited to celebrate with you!</p>
-      <p style="font-family:'Tiro Devanagari Hindi',serif;font-size:1.2rem;color:var(--gold-l);margin-top:16px">आनंदाने या — आम्ही वाट पाहतो आहोत! 🪔</p>
-    </div>
-  </div>
+  <div style="font-size:48px;margin-bottom:16px" id="rty-icon">🎉</div>
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:300;font-style:italic;color:var(--gold-lll);margin-bottom:10px" id="rty-title">See you on May 7th!</h3>
+  <p style="color:var(--gold-l);opacity:0.85;font-size:15px;line-height:1.8" id="rty-msg"></p>
+  
+  <p id="rty-marathi" style="font-family:'Tiro Devanagari Hindi',serif;font-size:1.2rem;color:var(--gold-l);margin-top:16px">आनंदाने या — आम्ही वाट पाहतो आहोत! 🪔</p>
+</div>
 </section>
 
 <style>
@@ -1049,38 +1049,41 @@
 </style>
 
 <script>
-// Replace this with your actual Google Web App URL
+/* Define your Sheet URL here */
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmlU0APl10SqoGT6rceWb4HhIdDZZX0qoOXLfCpvEb7UHTTbQ9JKF5BPeKCKkmjsPP/exec';
 
-let rAttVal='yes', rGuestCount=1;
+let rAttVal = 'yes';
+let rGuestCount = 1;
 
-function rAtt(v){
-  rAttVal=v;
-  document.getElementById('rb-yes').style.background=v==='yes'?'rgba(200,137,31,0.3)':'transparent';
-  document.getElementById('rb-yes').style.color=v==='yes'?'var(--gold-ll)':'rgba(245,216,122,0.45)';
-  document.getElementById('rb-no').style.background=v==='no'?'rgba(200,137,31,0.3)':'transparent';
-  document.getElementById('rb-no').style.color=v==='no'?'var(--gold-ll)':'rgba(245,216,122,0.45)';
-  document.getElementById('rsvp-extra').style.display=v==='yes'?'':'none';
+function rAtt(v) {
+  rAttVal = v;
+  document.getElementById('rb-yes').style.background = v === 'yes' ? 'rgba(200,137,31,0.3)' : 'transparent';
+  document.getElementById('rb-yes').style.color = v === 'yes' ? 'var(--gold-ll)' : 'rgba(245,216,122,0.45)';
+  document.getElementById('rb-no').style.background = v === 'no' ? 'rgba(200,137,31,0.3)' : 'transparent';
+  document.getElementById('rb-no').style.color = v === 'no' ? 'var(--gold-ll)' : 'rgba(245,216,122,0.45)';
+  document.getElementById('rsvp-extra').style.display = v === 'yes' ? '' : 'none';
 }
 
-function rGuest(d){rGuestCount=Math.min(10,Math.max(1,rGuestCount+d));document.getElementById('rg-num').textContent=rGuestCount}
+function rGuest(d) {
+  rGuestCount = Math.min(10, Math.max(1, rGuestCount + d));
+  document.getElementById('rg-num').textContent = rGuestCount;
+}
 
-async function rSubmit(){
+async function rSubmit() {
   const n = document.getElementById('rn').value.trim();
   const p = document.getElementById('rp').value.trim();
   const m = document.getElementById('rm').value.trim();
   const e = document.getElementById('rev').value;
   const btn = document.getElementById('submit-btn');
 
-  if(!n){
-    document.getElementById('rn').style.borderColor='#E24B4A';
-    setTimeout(()=>document.getElementById('rn').style.borderColor='',1800);
+  if (!n) {
+    document.getElementById('rn').style.borderColor = '#E24B4A';
+    setTimeout(() => document.getElementById('rn').style.borderColor = '', 1800);
     return;
   }
 
   btn.disabled = true;
   btn.textContent = "SENDING...";
-  btn.style.opacity = "0.7";
 
   const formData = {
     name: n,
@@ -1092,28 +1095,36 @@ async function rSubmit(){
   };
 
   try {
-    // Attempting to send data to Google Sheets
     await fetch(SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors', // Essential for Google Apps Script
-      cache: 'no-cache',
-      headers: { 'Content-Type': 'application/json' },
+      mode: 'no-cors',
       body: JSON.stringify(formData)
     });
 
-    document.getElementById('rsvp-card').style.display='none';
-    document.getElementById('rsvp-ty').style.display='block';
+    document.getElementById('rsvp-card').style.display = 'none';
+    document.getElementById('rsvp-ty').style.display = 'block';
 
-    if(rAttVal==='no'){
-      document.getElementById('rty-icon').textContent='🙏';
-      document.getElementById('rty-title').textContent='Thank you for letting us know';
-      document.getElementById('rty-msg').textContent='We will miss you dearly. Your blessings mean everything to us.';
+    // HEARTFELT "NO" RESPONSE LOGIC
+    if (rAttVal === 'no') {
+      document.getElementById('rty-icon').textContent = '🙏';
+      document.getElementById('rty-title').textContent = 'Thank you for your wishes';
+      document.getElementById('rty-msg').innerHTML = `We will miss you dearly, <strong>${n}</strong>. <br>Your blessings mean everything to us!`;
+      
+      // THIS LINE HIDES THE MARATHI TEXT FOR "NO"
+      document.getElementById('rty-marathi').style.display = 'none';
+      
+    } else {
+      document.getElementById('rty-icon').textContent = '🎉';
+      document.getElementById('rty-title').textContent = 'See you on May 7th!';
+      document.getElementById('rty-msg').innerHTML = `Thank you for responding, <strong>${n}</strong>. <br>We're so excited to celebrate with you at Shree Ram Palace!`;
+      
+      // THIS LINE SHOWS THE MARATHI TEXT FOR "YES"
+      document.getElementById('rty-marathi').style.display = 'block';
     }
-  } catch (error) {
-    console.error('Error!', error.message);
+  } catch (err) {
     btn.disabled = false;
     btn.textContent = "✦   TRY AGAIN   ✦";
-    alert("Something went wrong. Please try sending again.");
+    alert("Connection error. Please check your internet.");
   }
 }
 </script>
