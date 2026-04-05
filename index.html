@@ -25,13 +25,12 @@
     body { font-family: 'IM Fell English', Georgia, serif; background: var(--cream); color: var(--dark-ink); overflow-x: hidden; }
 
     /* ═══════════════════════════════════════════
-       DOOR ENTRANCE — IMPROVED
+       DOOR ENTRANCE
     ═══════════════════════════════════════════ */
     #door-wrapper {
       position: fixed; inset: 0; z-index: 1000;
       display: flex; cursor: pointer;
     }
-    /* Fade-out after open */
     #door-wrapper.opened {
       pointer-events: none;
       animation: door-wrapper-fade 0.5s ease 2s forwards;
@@ -46,7 +45,6 @@
       overflow: hidden;
       display: flex; align-items: center;
     }
-    /* Rich trellis pattern */
     .door::before {
       content: '';
       position: absolute; inset: 0; z-index: 0;
@@ -84,11 +82,24 @@
       color: var(--gold); font-size: 0.9rem;
     }
 
+    /* ── FIXED: door label much bigger ── */
     .door-label {
-      font-family: 'Cinzel', serif; font-size: clamp(0.42rem, 1.2vw, 0.55rem);
-      letter-spacing: clamp(3px, 1vw, 6px); color: var(--gold-l); opacity: 0.7;
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: clamp(1rem, 3.5vw, 1.6rem);   /* was ~0.5rem, now 2x+ */
+      letter-spacing: clamp(1px, 0.5vw, 3px);
+      color: var(--gold-l);
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+    /* The small GROOM / BRIDE sub-label stays small */
+    .door-label-small {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.42rem, 1.2vw, 0.55rem);
+      letter-spacing: clamp(3px, 1vw, 6px);
+      color: var(--gold-l); opacity: 0.6;
       text-transform: uppercase;
     }
+
     .door-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2.4rem, 7vw, 6rem);
@@ -98,16 +109,13 @@
     }
     .door-devanagari {
       font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(0.85rem, 2vw, 1.4rem);
-      color: var(--gold-l); opacity: 0.8;
+      font-size: clamp(1.2rem, 3.5vw, 2rem);   /* slightly bigger too */
+      color: var(--gold-l); opacity: 0.9;
     }
     .door-arch-bottom {
       width: 80px; height: 1px;
       background: linear-gradient(to right, transparent, var(--gold-l), transparent);
     }
-
-    /* Seam */
-    #door-seam { display: none; }
 
     /* Tap hint */
     .door-tap-hint {
@@ -189,28 +197,28 @@
     .hero-ganesh {
       width: clamp(140px, 22vw, 260px);
       margin-bottom: 0.8rem;
-      position: relative;
-      z-index: 1;
-
-      /* ✨ BLENDING MAGIC */
+      position: relative; z-index: 1;
       mix-blend-mode: screen;
-
-      /* ✨ SOFT GLOW */
-      filter:
-        drop-shadow(0 0 25px rgba(245,216,122,0.5))
-        drop-shadow(0 0 60px rgba(200,137,31,0.35));
-
+      filter: drop-shadow(0 0 25px rgba(245,216,122,0.5)) drop-shadow(0 0 60px rgba(200,137,31,0.35));
       opacity: 0.95;
-
-      animation: float-ganesh 4s ease-in-out infinite;
     }
+
+    /* ── PHOTO FALLBACK: if ganesha.png missing, show gold OM symbol ── */
+    .hero-ganesh-fallback {
+      width: clamp(140px, 22vw, 260px);
+      margin-bottom: 0.8rem;
+      position: relative; z-index: 1;
+      font-size: clamp(80px, 15vw, 160px);
+      line-height: 1;
+      filter: drop-shadow(0 0 25px rgba(245,216,122,0.5));
+    }
+
     .hero-invocation {
       font-family: 'Tiro Devanagari Hindi', serif;
       color: var(--gold-ll); font-size: clamp(0.7rem, 2vw, 0.95rem);
       line-height: 2; letter-spacing: 1px; position: relative; z-index: 1;
       text-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
-
     .hero-sub {
       font-family: 'Cinzel', serif;
       font-size: clamp(0.45rem, 1.4vw, 0.75rem);
@@ -219,7 +227,6 @@
       position: relative; z-index: 1;
       max-width: 90vw;
     }
-
     .hero-names {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(3rem, 14vw, 8rem);
@@ -234,7 +241,6 @@
       margin: -0.3em 0;
     }
     .hero-names span { display: block; }
-
     .hero-date {
       font-family: 'Tiro Devanagari Hindi', serif;
       font-size: clamp(1.2rem, 4vw, 2.2rem);
@@ -291,7 +297,6 @@
     ═══════════════════════════════════════════ */
     .sec { padding: clamp(4rem, 8vw, 7rem) 0; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
-
     .sec-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.9rem, 6vw, 3.8rem);
@@ -346,10 +351,34 @@
       cursor: pointer;
     }
     .polaroid:hover { box-shadow: 0 25px 60px rgba(0,0,0,0.28); z-index: 10 !important; }
+
+    /* ── PHOTO FIX: constrained img + fallback bg ── */
     .polaroid img {
       width: 100%; height: 220px; object-fit: cover;
       filter: sepia(10%) saturate(90%);
+      background: linear-gradient(135deg, var(--maroon-d), var(--maroon));
+      display: block;
     }
+    /* If image fails to load, show a beautiful maroon placeholder */
+    .polaroid img::after {
+      content: '🌸';
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 220px;
+      background: linear-gradient(135deg, var(--maroon-d), var(--maroon));
+      font-size: 3rem;
+    }
+    .photo-placeholder {
+      width: 100%; height: 220px;
+      background: linear-gradient(135deg, var(--maroon-d) 0%, var(--maroon) 50%, var(--maroon-m) 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      color: var(--gold-l); font-size: 2.5rem;
+    }
+    .photo-placeholder span {
+      font-family: 'Cinzel', serif; font-size: 0.5rem;
+      letter-spacing: 3px; color: rgba(228,171,58,0.6); margin-top: 4px;
+    }
+
     .polaroid .cap {
       text-align: center; font-family: 'IM Fell English', Georgia, serif;
       font-style: italic; color: #666; font-size: 0.85rem;
@@ -445,17 +474,12 @@
     .event-hour { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 600; color: var(--maroon); line-height: 1; }
     .event-hour span { font-size: 0.7em; font-weight: 300; color: var(--gold); }
 
-    /* Mobile: stack time below name */
     @media (max-width: 480px) {
       .event-card {
         grid-template-columns: auto 1fr;
         grid-template-rows: auto auto;
       }
-      .event-time {
-        grid-column: 2;
-        text-align: left;
-        margin-top: 4px;
-      }
+      .event-time { grid-column: 2; text-align: left; margin-top: 4px; }
     }
 
     .love-btn {
@@ -612,7 +636,6 @@
       font-size: clamp(0.95rem, 2.5vw, 1.1rem); color: rgba(253,240,194,0.6);
       max-width: 480px; margin: 0 auto; line-height: 1.8;
     }
-
     .footer-bottom {
       padding: 2rem 1.5rem 1rem;
       border-top: 1px solid rgba(200,137,31,0.08);
@@ -625,7 +648,7 @@
     }
 
     /* ═══════════════════════════════════════════
-       IMPROVED NAV BAR
+       NAV BAR
     ═══════════════════════════════════════════ */
     nav {
       position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
@@ -658,10 +681,6 @@
     ═══════════════════════════════════════════ */
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s ease, transform 0.9s ease; }
-    .reveal-left.visible { opacity: 1; transform: translateX(0); }
-    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
-    .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
     /* ═══════════════════════════════════════════
        MUSIC PLAYER
@@ -679,7 +698,6 @@
       max-width: calc(100vw - 32px);
     }
     #music-player.show { opacity: 1; transform: translateY(0); }
-
     .mp-btn {
       width: 36px; height: 36px; border-radius: 50%;
       background: linear-gradient(135deg, var(--gold), var(--gold-l));
@@ -690,7 +708,6 @@
       transition: transform 0.2s;
     }
     .mp-btn:hover { transform: scale(1.1); }
-
     .mp-info { display: flex; flex-direction: column; }
     .mp-title {
       font-family: 'Cinzel', serif; font-size: clamp(0.48rem, 1.3vw, 0.6rem);
@@ -700,54 +717,38 @@
       font-family: 'IM Fell English', serif; font-style: italic;
       font-size: clamp(0.55rem, 1.4vw, 0.65rem); color: rgba(245,216,122,0.6); margin-top: 1px;
     }
-
     .mp-bars {
       display: flex; align-items: flex-end; gap: 2px; height: 18px; margin-left: 4px;
     }
-    .mp-bars span {
-      display: block; width: 3px; background: var(--gold-l); border-radius: 2px;
-      animation: none; opacity: 0.4;
-    }
+    .mp-bars span { display: block; width: 3px; background: var(--gold-l); border-radius: 2px; animation: none; opacity: 0.4; }
     .mp-bars.playing span { opacity: 1; }
     .mp-bars.playing span:nth-child(1) { animation: eq 0.8s ease-in-out infinite; }
     .mp-bars.playing span:nth-child(2) { animation: eq 0.6s ease-in-out infinite 0.1s; }
     .mp-bars.playing span:nth-child(3) { animation: eq 1s ease-in-out infinite 0.2s; }
     .mp-bars.playing span:nth-child(4) { animation: eq 0.7s ease-in-out infinite 0.05s; }
-    @keyframes eq {
-      0%,100% { height: 4px; }
-      50%      { height: 16px; }
-    }
+    @keyframes eq { 0%,100% { height: 4px; } 50% { height: 16px; } }
 
     /* ═══════════════════════════════════════════
        MAP SECTION
     ═══════════════════════════════════════════ */
-    .map-wrapper {
-      position: relative; max-width: 720px; margin: 3rem auto 0;
-    }
+    .map-wrapper { position: relative; max-width: 720px; margin: 3rem auto 0; }
     .map-frame-border {
       position: relative; padding: 12px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(200,137,31,0.35);
       border-radius: 4px;
     }
-    .map-corner {
-      position: absolute; width: 28px; height: 28px;
-      border-color: var(--gold-l); border-style: solid; opacity: 0.8;
-    }
+    .map-corner { position: absolute; width: 28px; height: 28px; border-color: var(--gold-l); border-style: solid; opacity: 0.8; }
     .map-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
     .map-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
     .map-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
     .map-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-
     .map-osm {
       position: relative; width: 100%;
       height: clamp(220px, 40vw, 340px);
-      overflow: hidden;
-      border-radius: 2px; background: #d4c5a9;
+      overflow: hidden; border-radius: 2px; background: #d4c5a9;
     }
-    .map-fallback-wrap {
-      width: 100%; height: 100%; display: block;
-    }
+    .map-fallback-wrap { width: 100%; height: 100%; display: block; }
     .map-overlay {
       position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(to bottom, transparent 50%, rgba(61,7,22,0.35) 100%);
@@ -762,40 +763,30 @@
       max-width: calc(100% - 32px);
     }
     .map-pin-icon { font-size: 1.3rem; flex-shrink: 0; }
-    .map-pin-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(0.85rem, 2.5vw, 1rem); font-weight: 600; color: var(--gold-ll);
-    }
-    .map-pin-addr {
-      font-family: 'Cinzel', serif; font-size: clamp(0.42rem, 1.2vw, 0.55rem);
-      letter-spacing: 1px; color: rgba(245,216,122,0.6); margin-top: 2px;
-    }
-    .map-actions {
-      display: flex; gap: 14px; justify-content: center;
-      margin-top: 2rem; flex-wrap: wrap;
-    }
+    .map-pin-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.85rem, 2.5vw, 1rem); font-weight: 600; color: var(--gold-ll); }
+    .map-pin-addr { font-family: 'Cinzel', serif; font-size: clamp(0.42rem, 1.2vw, 0.55rem); letter-spacing: 1px; color: rgba(245,216,122,0.6); margin-top: 2px; }
+    .map-actions { display: flex; gap: 14px; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
     .map-btn-alt {
       background: rgba(255,255,255,0.05) !important;
       border-color: rgba(200,137,31,0.3) !important;
       color: rgba(245,216,122,0.7) !important;
     }
     .map-btn-alt:hover { background: rgba(200,137,31,0.15) !important; }
-
   </style>
 </head>
 <body>
 
   <!-- ══ DOOR ENTRANCE ══ -->
-  <div id="door-seam"></div>
   <div id="door-wrapper" onclick="openDoors()">
     <div class="door door-left">
       <div class="door-panel">
         <div class="door-arch"></div>
-        <p class="door-label">विवाह सोहळा</p>
+        <!-- FIXED: शुभ विवाह now 2x bigger using .door-label class -->
+        <p class="door-label">शुभ विवाह</p>
         <h2 class="door-name">Kishor</h2>
         <p class="door-devanagari">किशोर</p>
         <div class="door-arch-bottom"></div>
-        <p class="door-label" style="font-size:0.5rem;letter-spacing:3px;opacity:0.5">GROOM</p>
+        <p class="door-label-small">GROOM</p>
       </div>
       <div class="door-tap-hint">
         <div class="tap-ring">👆</div>
@@ -805,22 +796,35 @@
     <div class="door door-right">
       <div class="door-panel">
         <div class="door-arch"></div>
-        <p class="door-label">शुभ विवाह</p>
+        <!-- FIXED: विवाह सोहळा now 2x bigger -->
+        <p class="door-label">विवाह सोहळा</p>
         <h2 class="door-name">Rutuja</h2>
-        <p class="door-devanagari">रुतुजा</p>
+        <!-- FIXED: Corrected Marathi spelling ऋतुजा -->
+        <p class="door-devanagari">ऋतुजा</p>
         <div class="door-arch-bottom"></div>
-        <p class="door-label" style="font-size:0.5rem;letter-spacing:3px;opacity:0.5">BRIDE</p>
+        <p class="door-label-small">BRIDE</p>
       </div>
     </div>
   </div>
 
   <main>
-    <!-- ══ MUSIC PLAYER ══ -->
+
+    <!-- ══ MUSIC PLAYER ══
+         ┌─────────────────────────────────────────────────┐
+         │  TO ADD YOUR BOLLYWOOD SONG:                    │
+         │  1. Put your MP3 file in the same folder        │
+         │     as this HTML file, e.g. "song.mp3"          │
+         │  2. Uncomment the <audio> tag below             │
+         │  3. Change "song.mp3" to your file name         │
+         └─────────────────────────────────────────────────┘
+    -->
+    <!-- <audio id="bg-audio" src="song.mp3" loop preload="auto"></audio> -->
+
     <div id="music-player" onclick="toggleMusic(event)">
       <button class="mp-btn" id="mp-icon" aria-label="Toggle music">🎵</button>
       <div class="mp-info">
-        <span class="mp-title">WEDDING SHEHNAI</span>
-        <span class="mp-sub">Classical &nbsp;·&nbsp; Auspicious</span>
+        <span class="mp-title">WEDDING MELODY</span>
+        <span class="mp-sub">Soft Piano &nbsp;·&nbsp; Romantic</span>
       </div>
       <div class="mp-bars" id="mp-bars">
         <span style="height:6px"></span>
@@ -832,7 +836,10 @@
 
     <!-- ══ HERO ══ -->
     <section id="hero">
-      <img src="ganesha.png" class="hero-ganesh" alt="Ganesha">
+      <!-- If ganesha.png is in same folder, it shows. Otherwise shows OM symbol -->
+      <img src="ganesha.png" class="hero-ganesh" alt="Ganesha" onerror="this.style.display='none';document.getElementById('ganesh-fallback').style.display='block'">
+      <div id="ganesh-fallback" class="hero-ganesh-fallback" style="display:none">🕉️</div>
+
       <div class="hero-invocation">
         <p>॥ श्री गणेशाय नमः ॥</p>
         <p>॥ श्री यदोबा देवाय नमः ॥</p>
@@ -880,24 +887,27 @@
         <div class="ornament-line"><span class="ornament-icon">✦</span><span class="ornament-icon">🌸</span><span class="ornament-icon">✦</span></div>
         <div class="gallery-container">
           <div class="gallery-stack">
-  
-          <div class="polaroid p1">
-            <img src="Wed 1.JPG" alt="Kishor & Rutuja 1">
-            <p class="cap">The First Step</p>
-          </div>
 
-          <div class="polaroid p2">
-            <img src="Wed 2.JPG" alt="Kishor & Rutuja 2">
-            <p class="cap">Two Hearts</p>
-          </div>
+            <div class="polaroid p1">
+              <!-- Photos load from same folder. Fallback shows if file missing -->
+              <img src="Wed 1.JPG" alt="Kishor & Rutuja 1"
+                   onerror="this.outerHTML='<div class=\'photo-placeholder\'><span>🌸</span><span>THE FIRST STEP</span></div>'">
+              <p class="cap">The First Step</p>
+            </div>
 
-          <div class="polaroid p3">
-            <img src="Wed 3.JPG" alt="Kishor & Rutuja 3">
-            <p class="cap">Eternal Love</p>
-          </div>
+            <div class="polaroid p2">
+              <img src="Wed 2.JPG" alt="Kishor & Rutuja 2"
+                   onerror="this.outerHTML='<div class=\'photo-placeholder\'><span>💛</span><span>TWO HEARTS</span></div>'">
+              <p class="cap">Two Hearts</p>
+            </div>
 
-        </div>
-                  </div>
+            <div class="polaroid p3">
+              <img src="Wed 3.JPG" alt="Kishor & Rutuja 3"
+                   onerror="this.outerHTML='<div class=\'photo-placeholder\'><span>🪔</span><span>ETERNAL LOVE</span></div>'">
+              <p class="cap">Eternal Love</p>
+            </div>
+
+          </div>
           <div class="gallery-message">
             <p>With hearts full of love and homes full of blessings, we joyfully invite you to witness the union of our beloved Kishor and Rutuja.</p>
             <p style="margin-top:1.2rem;">Your presence will make our celebration complete.</p>
@@ -989,7 +999,6 @@
             <div class="map-corner bl"></div>
             <div class="map-corner br"></div>
             <div class="map-osm" id="mapCanvas">
-              <!-- SVG illustrated map — no external image needed, always works -->
               <svg class="map-fallback-wrap" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
                 <defs>
                   <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -1118,39 +1127,20 @@
   <script>
     /* ── DOOR ── */
     let doorsOpened = false;
-
-    // Fallback: reveal content after 6s if door not tapped
-    const fallbackTimer = setTimeout(() => {
-      if (!doorsOpened) openDoors();
-    }, 6000);
+    const fallbackTimer = setTimeout(() => { if (!doorsOpened) openDoors(); }, 6000);
 
     function openDoors() {
       if (doorsOpened) return;
       doorsOpened = true;
       clearTimeout(fallbackTimer);
-
-      const wrapper = document.getElementById('door-wrapper');
-      wrapper.classList.add('opened');
-
+      document.getElementById('door-wrapper').classList.add('opened');
       startPetals();
       startCountdown();
-
       setTimeout(() => {
         document.getElementById('music-player').classList.add('show');
-        // Auto-start music after user gesture
         setTimeout(() => {
-          if (!musicPlaying) {
-            try {
-              if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-              if (audioCtx.state === 'suspended') audioCtx.resume();
-              musicPlaying = true;
-              playMelody();
-              document.getElementById('mp-icon').textContent = '🔊';
-              document.getElementById('mp-bars').classList.add('playing');
-            } catch(e) {
-              console.warn('Audio init failed:', e);
-            }
-          }
+          // Try to autoplay after door gesture
+          tryAutoplay();
         }, 400);
       }, 2000);
     }
@@ -1173,7 +1163,7 @@
       }, 200);
     }
 
-    /* ── COUNTDOWN — only starts after door opens ── */
+    /* ── COUNTDOWN ── */
     function startCountdown() {
       const target = new Date("May 7, 2026 15:11:00").getTime();
       function tick() {
@@ -1187,110 +1177,145 @@
           ['days','hrs','mins','secs'].forEach(id => document.getElementById(id).textContent = '00');
         }
       }
-      tick();
-      setInterval(tick, 1000);
+      tick(); setInterval(tick, 1000);
     }
 
     /* ── SCROLL REVEAL ── */
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(r => obs.observe(r));
+    document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
-    /* ── ACTIVE NAV HIGHLIGHT ── */
+    /* ── ACTIVE NAV ── */
     const sections = ['hero','intro','gallery','parents','ceremony','venue'];
     const navLinks = document.querySelectorAll('nav a');
     const sectionObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          navLinks.forEach(a => {
-            a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
-          });
+          navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id); });
         }
       });
     }, { threshold: 0.4 });
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) sectionObs.observe(el);
-    });
+    sections.forEach(id => { const el = document.getElementById(id); if (el) sectionObs.observe(el); });
 
-    /* ── MUSIC ── */
+    /* ══════════════════════════════════════════════════════
+       MUSIC SYSTEM
+       ─────────────────────────────────────────────────────
+       HOW TO ADD YOUR BOLLYWOOD SONG:
+       1. Save your MP3 file in the same folder as this HTML
+          e.g. name it "song.mp3"
+       2. In the <audio> tag above (search for bg-audio),
+          remove the comment tags <!-- and -->
+       3. Change src="song.mp3" to your filename
+       4. Done! The play button will control your song.
+
+       The piano melody below plays only if no audio file is set.
+    ══════════════════════════════════════════════════════ */
     let audioCtx = null, musicPlaying = false, musicLoop = null;
+    const audioEl = document.getElementById('bg-audio'); // null if commented out
 
-    const MELODY = [
-      [392.0, 0.5, 0.05],[440.0, 0.4, 0.05],[493.9, 0.6, 0.1],[523.3, 0.8, 0.15],
-      [587.3, 0.5, 0.05],[523.3, 0.4, 0.05],[493.9, 0.3, 0.05],[440.0, 0.6, 0.1],
-      [392.0, 0.4, 0.05],[349.2, 0.5, 0.05],[329.6, 0.4, 0.05],[349.2, 0.3, 0.05],
-      [392.0, 0.8, 0.2],[440.0, 0.5, 0.05],[493.9, 0.4, 0.05],[523.3, 1.0, 0.2],
-      [493.9, 0.3, 0.05],[440.0, 0.4, 0.05],[392.0, 0.5, 0.05],[349.2, 1.2, 0.3],
-    ];
-
-    function createShehnaiNote(ctx, freq, startTime, duration) {
-      const osc1 = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();
-      const osc3 = ctx.createOscillator();
-      const gainNode = ctx.createGain();
-      const filter = ctx.createBiquadFilter();
-      const lfo = ctx.createOscillator();
-      const lfoGain = ctx.createGain();
-
-      osc1.type = 'sawtooth'; osc1.frequency.setValueAtTime(freq, startTime);
-      osc2.type = 'triangle'; osc2.frequency.setValueAtTime(freq * 1.003, startTime);
-      osc3.type = 'sawtooth'; osc3.frequency.setValueAtTime(freq * 2.01, startTime);
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(freq * 3.5, startTime);
-      filter.Q.setValueAtTime(2.5, startTime);
-      lfo.frequency.setValueAtTime(5.5, startTime);
-      lfoGain.gain.setValueAtTime(freq * 0.012, startTime);
-      lfo.connect(lfoGain);
-      lfoGain.connect(osc1.frequency);
-      lfoGain.connect(osc2.frequency);
-
-      gainNode.gain.setValueAtTime(0, startTime);
-      gainNode.gain.linearRampToValueAtTime(0.18, startTime + 0.06);
-      gainNode.gain.setValueAtTime(0.15, startTime + duration * 0.7);
-      gainNode.gain.linearRampToValueAtTime(0, startTime + duration);
-
-      osc1.connect(filter); osc2.connect(filter); osc3.connect(filter);
-      filter.connect(gainNode); gainNode.connect(ctx.destination);
-
-      const end = startTime + duration + 0.05;
-      [osc1, osc2, osc3, lfo].forEach(n => { n.start(startTime); n.stop(end); });
-    }
-
-    function playMelody() {
-      if (!audioCtx || !musicPlaying) return;
-      let t = audioCtx.currentTime + 0.1;
-      MELODY.forEach(([freq, dur, gap]) => {
-        createShehnaiNote(audioCtx, freq, t, dur);
-        t += dur + gap;
-      });
-      const total = MELODY.reduce((a, [,d,g]) => a + d + g, 0);
-      musicLoop = setTimeout(playMelody, total * 1000 - 200);
-    }
-
-    function toggleMusic(e) {
-      e.stopPropagation();
-      if (!musicPlaying) {
+    function tryAutoplay() {
+      if (audioEl) {
+        audioEl.volume = 0.5;
+        audioEl.play().then(() => {
+          musicPlaying = true;
+          document.getElementById('mp-icon').textContent = '🔊';
+          document.getElementById('mp-bars').classList.add('playing');
+          document.querySelector('.mp-title').textContent = 'NOW PLAYING';
+        }).catch(() => {}); // Browser may block, user can tap to play
+      } else {
+        // Fallback: soft piano
         try {
           if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
           if (audioCtx.state === 'suspended') audioCtx.resume();
           musicPlaying = true;
-          playMelody();
+          playPiano();
           document.getElementById('mp-icon').textContent = '🔊';
           document.getElementById('mp-bars').classList.add('playing');
-        } catch(err) {
-          console.warn('Audio toggle failed:', err);
+        } catch(e) {}
+      }
+    }
+
+    function toggleMusic(e) {
+      e.stopPropagation();
+      if (audioEl) {
+        // HTML audio mode
+        if (audioEl.paused) {
+          audioEl.play();
+          musicPlaying = true;
+          document.getElementById('mp-icon').textContent = '🔊';
+          document.getElementById('mp-bars').classList.add('playing');
+        } else {
+          audioEl.pause();
+          musicPlaying = false;
+          document.getElementById('mp-icon').textContent = '🎵';
+          document.getElementById('mp-bars').classList.remove('playing');
         }
       } else {
-        musicPlaying = false;
-        clearTimeout(musicLoop);
-        if (audioCtx) audioCtx.suspend();
-        document.getElementById('mp-icon').textContent = '🎵';
-        document.getElementById('mp-bars').classList.remove('playing');
+        // WebAudio piano mode
+        if (!musicPlaying) {
+          try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            musicPlaying = true;
+            playPiano();
+            document.getElementById('mp-icon').textContent = '🔊';
+            document.getElementById('mp-bars').classList.add('playing');
+          } catch(err) {}
+        } else {
+          musicPlaying = false;
+          clearTimeout(musicLoop);
+          if (audioCtx) audioCtx.suspend();
+          document.getElementById('mp-icon').textContent = '🎵';
+          document.getElementById('mp-bars').classList.remove('playing');
+        }
       }
+    }
+
+    /* ── Soft romantic piano melody (replaces shehnai) ── */
+    const PIANO = [
+      // Gentle, warm, romantic notes — Raag Yaman inspired
+      [523.25,0.6,0.08],[587.33,0.4,0.06],[659.25,0.5,0.06],[739.99,0.8,0.12],
+      [783.99,0.5,0.06],[739.99,0.4,0.06],[659.25,0.6,0.08],[587.33,0.4,0.06],
+      [523.25,0.5,0.06],[493.88,0.4,0.06],[440.00,0.8,0.14],[493.88,0.4,0.06],
+      [523.25,0.6,0.08],[587.33,0.5,0.06],[659.25,0.4,0.06],[739.99,1.0,0.18],
+      [659.25,0.4,0.06],[587.33,0.5,0.06],[523.25,0.6,0.08],[493.88,0.4,0.06],
+      [440.00,0.5,0.06],[392.00,0.4,0.06],[349.23,1.2,0.25],
+    ];
+
+    function playPianoNote(ctx, freq, startTime, duration) {
+      const osc  = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const comp = ctx.createDynamicsCompressor();
+
+      osc.type  = 'triangle';
+      osc2.type = 'sine';
+      osc.frequency.setValueAtTime(freq, startTime);
+      osc2.frequency.setValueAtTime(freq * 2.001, startTime);
+
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(0.22, startTime + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.12, startTime + duration * 0.5);
+      gain.gain.linearRampToValueAtTime(0, startTime + duration);
+
+      osc.connect(gain); osc2.connect(gain);
+      gain.connect(comp); comp.connect(ctx.destination);
+
+      const end = startTime + duration + 0.05;
+      osc.start(startTime);  osc.stop(end);
+      osc2.start(startTime); osc2.stop(end);
+    }
+
+    function playPiano() {
+      if (!audioCtx || !musicPlaying) return;
+      let t = audioCtx.currentTime + 0.1;
+      PIANO.forEach(([freq, dur, gap]) => {
+        playPianoNote(audioCtx, freq, t, dur);
+        t += dur + gap;
+      });
+      const total = PIANO.reduce((a, [,d,g]) => a + d + g, 0);
+      musicLoop = setTimeout(playPiano, total * 1000 - 200);
     }
 
     /* ── HEARTS BURST ── */
@@ -1306,7 +1331,7 @@
           document.body.appendChild(el);
           requestAnimationFrame(() => {
             el.style.bottom = (60 + Math.random() * 80) + 'vh';
-            el.style.left = (startX + (Math.random() * 120 - 60)) + 'px';
+            el.style.left   = (startX + (Math.random() * 120 - 60)) + 'px';
             el.style.opacity = '0';
             el.style.transform = `rotate(${Math.random()*360}deg) scale(${Math.random()*0.5+0.8})`;
           });
