@@ -983,7 +983,140 @@
         </div>
       </div>
     </section>
+<section id="rsvp" class="sec" style="background:linear-gradient(160deg,var(--maroon) 0%,var(--maroon-d) 100%);padding:clamp(4rem,8vw,7rem) clamp(16px,5vw,24px);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\'%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'34\' fill=\'none\' stroke=\'%23c8891f\' stroke-width=\'0.5\' opacity=\'0.12\'/%3E%3C/svg%3E');background-size:80px 80px;pointer-events:none"></div>
+  <div class="container reveal" style="position:relative;z-index:1">
+    <h2 class="sec-title" style="color:var(--gold-lll)">Kindly <em>Respond</em></h2>
+    <p style="font-family:'Tiro Devanagari Hindi',serif;text-align:center;color:var(--gold-l);font-size:clamp(1rem,3vw,1.4rem);margin-top:0.5rem">उपस्थिती कळवा</p>
+    <div class="ornament-line" style="margin-top:1.5rem"><span style="color:var(--gold)">✦</span><span style="color:var(--gold);font-size:1.2rem">🪔</span><span style="color:var(--gold)">✦</span></div>
 
+    <div id="rsvp-card" style="max-width:560px;margin:0 auto;background:rgba(255,255,255,0.06);border:1px solid rgba(200,137,31,0.3);border-radius:12px;padding:clamp(20px,5vw,36px);backdrop-filter:blur(8px)">
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="rsvp-grid">
+        <div><label class="rsvp-lbl">Your Name *</label><input class="rsvp-inp" id="rn" type="text" placeholder="Full name"></div>
+        <div><label class="rsvp-lbl">Phone / WhatsApp</label><input class="rsvp-inp" id="rp" type="tel" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+
+      <div style="margin-top:18px"><label class="rsvp-lbl">Will you be attending? *</label>
+        <div style="display:flex;border:1px solid rgba(200,137,31,0.35);border-radius:8px;overflow:hidden;margin-top:8px">
+          <button class="att-b" id="rb-yes" onclick="rAtt('yes')" style="flex:1;padding:11px;background:rgba(200,137,31,0.3);border:none;cursor:pointer;color:var(--gold-ll);font-family:'IM Fell English',serif;font-size:14px;border-right:1px solid rgba(200,137,31,0.2)">🎉 Joyfully Attending</button>
+          <button class="att-b" id="rb-no"  onclick="rAtt('no')"  style="flex:1;padding:11px;background:transparent;border:none;cursor:pointer;color:rgba(245,216,122,0.45);font-family:'IM Fell English',serif;font-size:14px">🙏 Unable to Attend</button>
+        </div>
+      </div>
+
+      <div id="rsvp-extra" style="margin-top:18px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="rsvp-grid">
+          <div><label class="rsvp-lbl">Number of Guests</label>
+            <div style="display:flex;border:1px solid rgba(200,137,31,0.35);border-radius:8px;overflow:hidden;width:fit-content;margin-top:8px;background:rgba(0,0,0,0.2)">
+              <button onclick="rGuest(-1)" style="width:40px;height:42px;background:transparent;border:none;cursor:pointer;color:var(--gold-l);font-size:18px;border-right:1px solid rgba(200,137,31,0.2)">−</button>
+              <span id="rg-num" style="width:52px;text-align:center;line-height:42px;color:var(--gold-lll);font-family:'Cormorant Garamond',serif;font-size:18px">1</span>
+              <button onclick="rGuest(1)"  style="width:40px;height:42px;background:transparent;border:none;cursor:pointer;color:var(--gold-l);font-size:18px;border-left:1px solid rgba(200,137,31,0.2)">+</button>
+            </div>
+          </div>
+          <div><label class="rsvp-lbl">Which Event(s)</label>
+            <select class="rsvp-inp" id="rev" style="margin-top:8px; background-color: #3d0716; cursor: pointer;">
+              <option value="both">Haldi + Shubh Vivah</option>
+              <option value="vivah">Shubh Vivah only</option>
+              <option value="haldi">Haldi only</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px"><label class="rsvp-lbl">Blessings / Message</label>
+        <textarea id="rm" style="width:100%;margin-top:8px;padding:12px 16px;border-radius:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(200,137,31,0.35);color:var(--gold-lll);font-family:'IM Fell English',serif;font-style:italic;font-size:14px;outline:none;resize:vertical;min-height:80px" placeholder="Share your wishes for the couple…"></textarea>
+      </div>
+
+      <button id="submit-btn" onclick="rSubmit()" style="width:100%;margin-top:16px;padding:16px;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--maroon-d);border:none;border-radius:40px;cursor:pointer;font-family:'Cinzel',serif;font-size:0.65rem;font-weight:600;letter-spacing:3px;box-shadow:0 8px 28px rgba(200,137,31,0.35);transition: opacity 0.3s;">✦   SEND RSVP   ✦</button>
+    </div>
+
+    <div id="rsvp-ty" style="display:none;text-align:center;padding:48px 24px">
+      <div style="font-size:48px;margin-bottom:16px" id="rty-icon">🎉</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:300;font-style:italic;color:var(--gold-lll);margin-bottom:10px" id="rty-title">See you on May 7th!</h3>
+      <p style="color:var(--gold-l);opacity:0.85;font-size:15px;line-height:1.8" id="rty-msg">Thank you for responding. We're so excited to celebrate with you!</p>
+      <p style="font-family:'Tiro Devanagari Hindi',serif;font-size:1.2rem;color:var(--gold-l);margin-top:16px">आनंदाने या — आम्ही वाट पाहतो आहोत! 🪔</p>
+    </div>
+  </div>
+</section>
+
+<style>
+.rsvp-lbl{display:block;font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold-l);opacity:0.8;margin-bottom:6px}
+.rsvp-inp{width:100%;padding:11px 14px;border-radius:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(200,137,31,0.35);color:var(--gold-lll);font-family:'IM Fell English',serif;font-size:14px;outline:none;-webkit-appearance:none}
+.rsvp-inp option { background: var(--maroon-d); color: var(--gold-ll); }
+.rsvp-inp::placeholder{color:rgba(245,216,122,0.4)}
+.rsvp-inp:focus{border-color:var(--gold-l);background:rgba(255,255,255,0.11)}
+@media(max-width:480px){ .rsvp-grid {grid-template-columns: 1fr !important;} }
+</style>
+
+<script>
+// Replace this with your actual Google Web App URL
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmlU0APl10SqoGT6rceWb4HhIdDZZX0qoOXLfCpvEb7UHTTbQ9JKF5BPeKCKkmjsPP/exec';
+
+let rAttVal='yes', rGuestCount=1;
+
+function rAtt(v){
+  rAttVal=v;
+  document.getElementById('rb-yes').style.background=v==='yes'?'rgba(200,137,31,0.3)':'transparent';
+  document.getElementById('rb-yes').style.color=v==='yes'?'var(--gold-ll)':'rgba(245,216,122,0.45)';
+  document.getElementById('rb-no').style.background=v==='no'?'rgba(200,137,31,0.3)':'transparent';
+  document.getElementById('rb-no').style.color=v==='no'?'var(--gold-ll)':'rgba(245,216,122,0.45)';
+  document.getElementById('rsvp-extra').style.display=v==='yes'?'':'none';
+}
+
+function rGuest(d){rGuestCount=Math.min(10,Math.max(1,rGuestCount+d));document.getElementById('rg-num').textContent=rGuestCount}
+
+async function rSubmit(){
+  const n = document.getElementById('rn').value.trim();
+  const p = document.getElementById('rp').value.trim();
+  const m = document.getElementById('rm').value.trim();
+  const e = document.getElementById('rev').value;
+  const btn = document.getElementById('submit-btn');
+
+  if(!n){
+    document.getElementById('rn').style.borderColor='#E24B4A';
+    setTimeout(()=>document.getElementById('rn').style.borderColor='',1800);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "SENDING...";
+  btn.style.opacity = "0.7";
+
+  const formData = {
+    name: n,
+    phone: p,
+    attending: rAttVal,
+    guests: rAttVal === 'yes' ? rGuestCount : 0,
+    events: rAttVal === 'yes' ? e : 'N/A',
+    message: m
+  };
+
+  try {
+    // Attempting to send data to Google Sheets
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors', // Essential for Google Apps Script
+      cache: 'no-cache',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    document.getElementById('rsvp-card').style.display='none';
+    document.getElementById('rsvp-ty').style.display='block';
+
+    if(rAttVal==='no'){
+      document.getElementById('rty-icon').textContent='🙏';
+      document.getElementById('rty-title').textContent='Thank you for letting us know';
+      document.getElementById('rty-msg').textContent='We will miss you dearly. Your blessings mean everything to us.';
+    }
+  } catch (error) {
+    console.error('Error!', error.message);
+    btn.disabled = false;
+    btn.textContent = "✦   TRY AGAIN   ✦";
+    alert("Something went wrong. Please try sending again.");
+  }
+}
+</script>
     <!-- ══ VENUE ══ -->
     <section id="venue">
       <div class="reveal">
@@ -1057,11 +1190,11 @@
         </div>
 
         <div class="map-actions">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=17.6805,74.0400" target="_blank" rel="noopener" class="map-btn">
+          <a href="https://maps.app.goo.gl/DWhg25F6jwisW2ju9" target="_blank" rel="noopener" class="map-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             GET DIRECTIONS
           </a>
-          <a href="https://maps.apple.com/?ll=17.6805,74.0400&q=Shree+Ram+Palace" target="_blank" rel="noopener" class="map-btn map-btn-alt">
+          <a href="https://maps.apple/p/9KecJYYz5I393H" target="_blank" rel="noopener" class="map-btn map-btn-alt">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
             APPLE MAPS
           </a>
@@ -1120,6 +1253,7 @@
       <a href="#gallery">Gallery</a>
       <a href="#parents">Family</a>
       <a href="#ceremony">Timing</a>
+      <a href="#rsvp">RSVP</a>
       <a href="#venue">Venue</a>
     </nav>
   </main>
@@ -1187,7 +1321,7 @@
     document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
     /* ── ACTIVE NAV ── */
-    const sections = ['hero','intro','gallery','parents','ceremony','venue'];
+    const sections = ['hero','intro','gallery','parents','ceremony','RVSP','venue'];
     const navLinks = document.querySelectorAll('nav a');
     const sectionObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
