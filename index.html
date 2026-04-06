@@ -938,38 +938,43 @@
     <div class="venue-divider"></div>
     <p class="venue-address">National Highway 4, Kashil<br>Satara, Maharashtra</p>
 
-    <div class="map-wrapper">
+    <div class="map-wrapper" style="margin-bottom: 2rem;">
       <div class="map-frame-border">
         <div class="map-corner tl"></div>
         <div class="map-corner tr"></div>
         <div class="map-corner bl"></div>
         <div class="map-corner br"></div>
         
-        <div class="map-osm" id="mapCanvas">
+        <div class="map-osm" id="mapCanvas" style="position: relative; overflow: hidden;">
           <img src="venue.jpg" 
                alt="Shree Ram Palace" 
-               style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) sepia(5%);">
-          <div class="map-overlay"></div>
-        </div>
+               style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) sepia(5%); display: block;">
+          
+          <div class="map-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 40%); pointer-events: none;"></div>
 
-        <div class="map-pin-card">
-          <span class="map-pin-icon">📍</span>
-          <div>
-            <div class="map-pin-name">Shree Ram Palace</div>
-            <div class="map-pin-addr">NH-4, Kashil, Satara, Maharashtra</div>
+          <div class="map-pin-card" style="position: absolute; bottom: 15px; left: 15px; margin: 0; z-index: 5;">
+            <span class="map-pin-icon">📍</span>
+            <div style="text-align: left;">
+              <div class="map-pin-name">Shree Ram Palace</div>
+              <div class="map-pin-addr">NH-4, Kashil, Satara</div>
+            </div>
           </div>
         </div>
-      </div> </div> <div class="map-actions">
+      </div>
+    </div>
+
+    <div class="map-actions" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
       <a href="https://www.google.com/maps/search/?api=1&query=Shree+Ram+Palace+Kashil+Satara" target="_blank" rel="noopener" class="map-btn">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         GET DIRECTIONS
       </a>
-      <a href="https://maps.apple.com/?q=Shree+Ram+Palace+Kashil+Satara" target="_blank" rel="noopener" class="map-btn map-btn-alt">
+      <a href="http://maps.apple.com/?q=Shree+Ram+Palace+Kashil+Satara" target="_blank" rel="noopener" class="map-btn map-btn-alt">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
         APPLE MAPS
       </a>
     </div>
-  </div> </section>
+  </div>
+</section>
 
     <!-- ══ FOOTER ══ -->
     <footer>
