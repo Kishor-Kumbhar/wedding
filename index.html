@@ -24,9 +24,6 @@
     html { scroll-behavior: smooth; font-size: 16px; }
     body { font-family: 'IM Fell English', Georgia, serif; background: var(--cream); color: var(--dark-ink); overflow-x: hidden; }
 
-    /* ═══════════════════════════════════════════
-       DOOR ENTRANCE
-    ═══════════════════════════════════════════ */
     #door-wrapper {
       position: fixed; inset: 0; z-index: 1000;
       display: flex; cursor: pointer;
@@ -82,16 +79,14 @@
       color: var(--gold); font-size: 0.9rem;
     }
 
-    /* ── FIXED: door label much bigger ── */
     .door-label {
       font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(1rem, 3.5vw, 1.6rem);   /* was ~0.5rem, now 2x+ */
+      font-size: clamp(1rem, 3.5vw, 1.6rem);
       letter-spacing: clamp(1px, 0.5vw, 3px);
       color: var(--gold-l);
       opacity: 0.9;
       line-height: 1.5;
     }
-    /* The small GROOM / BRIDE sub-label stays small */
     .door-label-small {
       font-family: 'Cinzel', serif;
       font-size: clamp(0.42rem, 1.2vw, 0.55rem);
@@ -109,7 +104,7 @@
     }
     .door-devanagari {
       font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(1.2rem, 3.5vw, 2rem);   /* slightly bigger too */
+      font-size: clamp(1.2rem, 3.5vw, 2rem);
       color: var(--gold-l); opacity: 0.9;
     }
     .door-arch-bottom {
@@ -117,7 +112,6 @@
       background: linear-gradient(to right, transparent, var(--gold-l), transparent);
     }
 
-    /* Tap hint */
     .door-tap-hint {
       position: absolute; bottom: clamp(28px, 6vh, 56px); left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -141,15 +135,9 @@
     .opened .door-left { transform: translateX(-100%); }
     .opened .door-right { transform: translateX(100%); }
 
-    /* ═══════════════════════════════════════════
-       MAIN CONTENT
-    ═══════════════════════════════════════════ */
     main { opacity: 0; transition: opacity 1.2s ease 1.8s; padding-bottom: 100px; pointer-events: none; }
     .opened + main { opacity: 1; pointer-events: all; }
 
-    /* ═══════════════════════════════════════════
-       SVG DECORATIVES
-    ═══════════════════════════════════════════ */
     .ornament-line {
       display: flex; align-items: center; justify-content: center;
       gap: 18px; margin: 1rem auto 3rem;
@@ -163,9 +151,6 @@
     .ornament-line::after { background: linear-gradient(to left, transparent, var(--gold)); }
     .ornament-icon { color: var(--gold); font-size: 1.2rem; }
 
-    /* ═══════════════════════════════════════════
-       HERO SECTION
-    ═══════════════════════════════════════════ */
     #hero {
       min-height: 100vh;
       background:
@@ -202,8 +187,6 @@
       filter: drop-shadow(0 0 25px rgba(245,216,122,0.5)) drop-shadow(0 0 60px rgba(200,137,31,0.35));
       opacity: 0.95;
     }
-
-    /* ── PHOTO FALLBACK: if ganesha.png missing, show gold OM symbol ── */
     .hero-ganesh-fallback {
       width: clamp(140px, 22vw, 260px);
       margin-bottom: 0.8rem;
@@ -215,28 +198,25 @@
 
     .hero-invocation {
       font-family: 'Tiro Devanagari Hindi', serif;
-      color: var(--gold-ll); 
-      /* Increased for Marathi script clarity */
-      font-size: clamp(1.2rem, 3.5vw, 1.6rem); 
-      /* Extra line-height to prevent Marathi matras from touching */
-      line-height: 2; 
+      color: var(--gold-ll);
+      font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+      line-height: 2;
       font-weight: 400;
-      letter-spacing: 1px; 
-      position: relative; 
+      letter-spacing: 1px;
+      position: relative;
       z-index: 1;
       text-shadow: 0 2px 10px rgba(0,0,0,0.5);
       margin-bottom: 1.5rem;
     }
     .hero-sub {
       font-family: 'Cinzel', serif;
-      /* Increased from 0.45rem-0.75rem to 0.8rem-1.2rem */
-      font-size: clamp(0.8rem, 2.5vw, 1.2rem); 
-      letter-spacing: clamp(3px, 1.5vw, 6px); 
-      color: var(--gold-l); 
-      opacity: 0.9; /* Increased opacity for better readability */
-      margin-top: 2.5rem; 
+      font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+      letter-spacing: clamp(3px, 1.5vw, 6px);
+      color: var(--gold-l);
+      opacity: 0.9;
+      margin-top: 2.5rem;
       text-transform: uppercase;
-      position: relative; 
+      position: relative;
       z-index: 1;
       max-width: 90vw;
       line-height: 1.6;
@@ -269,7 +249,6 @@
       position: relative; z-index: 1;
     }
 
-    /* Countdown */
     .timer {
       display: flex; gap: clamp(6px, 2vw, 12px); margin-top: 2.5rem;
       position: relative; z-index: 1;
@@ -296,7 +275,6 @@
     .t-sep { font-size: clamp(1.2rem, 4vw, 2rem); color: var(--gold-l); align-self: flex-start; padding-top: clamp(10px, 3vw, 18px); opacity: 0.5; }
     .t-lab { font-family: 'Cinzel', serif; font-size: clamp(0.38rem, 1vw, 0.5rem); letter-spacing: 2px; text-transform: uppercase; color: var(--gold-l); opacity: 0.7; margin-top: 6px; display: block; }
 
-    /* Scroll indicator */
     .scroll-cue {
       position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -306,9 +284,6 @@
     }
     @keyframes bounce-cue { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
-    /* ═══════════════════════════════════════════
-       SECTIONS
-    ═══════════════════════════════════════════ */
     .sec { padding: clamp(4rem, 8vw, 7rem) 0; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 24px); }
     .sec-title {
@@ -319,9 +294,6 @@
     }
     .sec-title em { font-style: italic; color: var(--gold); }
 
-    /* ═══════════════════════════════════════════
-       INTRO BAND
-    ═══════════════════════════════════════════ */
     #intro {
       background: linear-gradient(135deg, var(--maroon-d) 0%, var(--maroon) 100%);
       padding: clamp(4rem, 8vw, 6rem) clamp(20px, 6vw, 24px);
@@ -365,21 +337,10 @@
       cursor: pointer;
     }
     .polaroid:hover { box-shadow: 0 25px 60px rgba(0,0,0,0.28); z-index: 10 !important; }
-
-    /* ── PHOTO FIX: constrained img + fallback bg ── */
     .polaroid img {
       width: 100%; height: 220px; object-fit: cover;
       filter: sepia(10%) saturate(90%);
-      background: linear-gradient(135deg, var(--maroon-d), var(--maroon));
       display: block;
-    }
-    /* If image fails to load, show a beautiful maroon placeholder */
-    .polaroid img::after {
-      content: '🌸';
-      display: flex; align-items: center; justify-content: center;
-      width: 100%; height: 220px;
-      background: linear-gradient(135deg, var(--maroon-d), var(--maroon));
-      font-size: 3rem;
     }
     .photo-placeholder {
       width: 100%; height: 220px;
@@ -392,7 +353,6 @@
       font-family: 'Cinzel', serif; font-size: 0.5rem;
       letter-spacing: 3px; color: rgba(228,171,58,0.6); margin-top: 4px;
     }
-
     .polaroid .cap {
       text-align: center; font-family: 'IM Fell English', Georgia, serif;
       font-style: italic; color: #666; font-size: 0.85rem;
@@ -418,9 +378,6 @@
       font-size: 2rem; color: var(--gold); margin-top: 1.5rem;
     }
 
-    /* ═══════════════════════════════════════════
-       PARENTS / FAMILY
-    ═══════════════════════════════════════════ */
     #parents { background: var(--maroon-d); }
     #parents .sec-title { color: var(--gold-ll); }
     #parents .sec-title em { color: var(--gold); }
@@ -449,9 +406,6 @@
     }
     .family-names span { color: var(--gold-l); font-weight: 300; font-style: italic; display: block; font-size: 0.9em; margin: 0.3rem 0; }
 
-    /* ═══════════════════════════════════════════
-       CEREMONY EVENTS
-    ═══════════════════════════════════════════ */
     #ceremony { background: var(--cream); position: relative; overflow: hidden; }
     #ceremony::before {
       content: '';
@@ -508,9 +462,6 @@
     }
     .love-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(200,137,31,0.45); }
 
-    /* ═══════════════════════════════════════════
-       VENUE
-    ═══════════════════════════════════════════ */
     #venue {
       background: linear-gradient(160deg, var(--maroon) 0%, var(--maroon-d) 100%);
       padding: clamp(5rem, 10vw, 8rem) clamp(16px, 5vw, 24px); text-align: center;
@@ -551,9 +502,6 @@
     }
     .map-btn:hover { background: rgba(200,137,31,0.2); }
 
-    /* ═══════════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════════ */
     footer {
       background: linear-gradient(170deg, var(--maroon-d) 0%, #120105 100%);
       padding: 0 0 140px;
@@ -661,9 +609,6 @@
       letter-spacing: clamp(2px, 1vw, 5px); color: rgba(200,137,31,0.35);
     }
 
-    /* ═══════════════════════════════════════════
-       NAV BAR
-    ═══════════════════════════════════════════ */
     nav {
       position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
       z-index: 500; display: flex; gap: 2px; padding: 6px 10px;
@@ -683,22 +628,14 @@
     }
     nav a:hover, nav a.active { color: var(--gold-ll); background: rgba(200,137,31,0.15); }
 
-    /* ═══════════════════════════════════════════
-       PETALS & HEARTS
-    ═══════════════════════════════════════════ */
     .petal { position: fixed; top: -6%; z-index: 999; pointer-events: none; animation: fall-petal linear forwards; font-size: 1.2rem; }
     @keyframes fall-petal { to { transform: translateY(110vh) rotate(540deg) translateX(30px); opacity: 0; } }
     .floater { position: fixed; pointer-events: none; z-index: 999; font-size: 1.4rem; transition: all 3.5s cubic-bezier(0.25,0.46,0.45,0.94); }
 
-    /* ═══════════════════════════════════════════
-       REVEAL ANIMATION
-    ═══════════════════════════════════════════ */
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ═══════════════════════════════════════════
-       MUSIC PLAYER
-    ═══════════════════════════════════════════ */
+    /* ══ MUSIC PLAYER ══ */
     #music-player {
       position: fixed; top: 16px; right: 16px; z-index: 600;
       display: flex; align-items: center; gap: 10px;
@@ -742,9 +679,6 @@
     .mp-bars.playing span:nth-child(4) { animation: eq 0.7s ease-in-out infinite 0.05s; }
     @keyframes eq { 0%,100% { height: 4px; } 50% { height: 16px; } }
 
-    /* ═══════════════════════════════════════════
-       MAP SECTION
-    ═══════════════════════════════════════════ */
     .map-wrapper { position: relative; max-width: 720px; margin: 3rem auto 0; }
     .map-frame-border {
       position: relative; padding: 12px;
@@ -795,7 +729,6 @@
     <div class="door door-left">
       <div class="door-panel">
         <div class="door-arch"></div>
-        <!-- FIXED: शुभ विवाह now 2x bigger using .door-label class -->
         <p class="door-label">शुभ विवाह</p>
         <h2 class="door-name">Kishor</h2>
         <p class="door-devanagari">किशोर</p>
@@ -810,10 +743,8 @@
     <div class="door door-right">
       <div class="door-panel">
         <div class="door-arch"></div>
-        <!-- FIXED: विवाह सोहळा now 2x bigger -->
         <p class="door-label">विवाह सोहळा</p>
         <h2 class="door-name">Rutuja</h2>
-        <!-- FIXED: Corrected Marathi spelling ऋतुजा -->
         <p class="door-devanagari">ऋतुजा</p>
         <div class="door-arch-bottom"></div>
         <p class="door-label-small">BRIDE</p>
@@ -823,22 +754,25 @@
 
   <main>
 
-    <!-- ══ MUSIC PLAYER ══
-         ┌─────────────────────────────────────────────────┐
-         │  TO ADD YOUR BOLLYWOOD SONG:                    │
-         │  1. Put your MP3 file in the same folder        │
-         │     as this HTML file, e.g. "song.mp3"          │
-         │  2. Uncomment the <audio> tag below             │
-         │  3. Change "song.mp3" to your file name         │
-         └─────────────────────────────────────────────────┘
-    -->
-    <!-- <audio id="bg-audio" src="song.mp3" loop preload="auto"></audio> -->
+    <!-- ══ RAABTA — YouTube background player (hidden) ══
+         Video ID: dTjGse3gn6Y  = Raabta Instrumental (Agent Sasco)
+         If you want a different version, replace the VIDEO_ID below.
+    ══ -->
+    <div id="yt-container" style="position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;overflow:hidden;pointer-events:none;">
+      <iframe id="yt-frame"
+        width="1" height="1"
+        src="https://www.youtube.com/embed/dTjGse3gn6Y?autoplay=0&loop=1&playlist=dTjGse3gn6Y&controls=0&enablejsapi=1&mute=0"
+        allow="autoplay; encrypted-media"
+        frameborder="0"
+        id="yt-player-iframe">
+      </iframe>
+    </div>
 
     <div id="music-player" onclick="toggleMusic(event)">
       <button class="mp-btn" id="mp-icon" aria-label="Toggle music">🎵</button>
       <div class="mp-info">
-        <span class="mp-title">WEDDING MELODY</span>
-        <span class="mp-sub">Soft Piano &nbsp;·&nbsp; Romantic</span>
+        <span class="mp-title" id="mp-title-text">RAABTA</span>
+        <span class="mp-sub">Instrumental &nbsp;·&nbsp; Wedding</span>
       </div>
       <div class="mp-bars" id="mp-bars">
         <span style="height:6px"></span>
@@ -850,7 +784,6 @@
 
     <!-- ══ HERO ══ -->
     <section id="hero">
-      <!-- If ganesha.png is in same folder, it shows. Otherwise shows OM symbol -->
       <img src="ganesha.png" class="hero-ganesh" alt="Ganesha" onerror="this.style.display='none';document.getElementById('ganesh-fallback').style.display='block'">
       <div id="ganesh-fallback" class="hero-ganesh-fallback" style="display:none">🕉️</div>
 
@@ -895,7 +828,7 @@
       </div>
     </section>
 
-    <!-- ══ GALLERY ══ -->
+    <!-- ══ GALLERY — POLAROID STACK ══ -->
     <section id="gallery" class="sec">
       <div class="container reveal">
         <h2 class="sec-title">Moments <em>Together</em></h2>
@@ -904,7 +837,6 @@
           <div class="gallery-stack">
 
             <div class="polaroid p1">
-              <!-- Photos load from same folder. Fallback shows if file missing -->
               <img src="Wed 1.JPG" alt="Kishor & Rutuja 1"
                    onerror="this.outerHTML='<div class=\'photo-placeholder\'><span>🌸</span><span>THE FIRST STEP</span></div>'">
               <p class="cap">The First Step</p>
@@ -998,6 +930,7 @@
         </div>
       </div>
     </section>
+
     <!-- ══ VENUE ══ -->
     <section id="venue">
       <div class="reveal">
@@ -1128,7 +1061,6 @@
       </div>
     </footer>
 
-    <!-- ══ BOTTOM NAV ══ -->
     <nav>
       <a href="#hero">Home</a>
       <a href="#gallery">Gallery</a>
@@ -1152,10 +1084,7 @@
       startCountdown();
       setTimeout(() => {
         document.getElementById('music-player').classList.add('show');
-        setTimeout(() => {
-          // Try to autoplay after door gesture
-          tryAutoplay();
-        }, 400);
+        setTimeout(() => { tryAutoplay(); }, 400);
       }, 2000);
     }
 
@@ -1213,123 +1142,66 @@
     sections.forEach(id => { const el = document.getElementById(id); if (el) sectionObs.observe(el); });
 
     /* ══════════════════════════════════════════════════════
-       MUSIC SYSTEM
-       ─────────────────────────────────────────────────────
-       HOW TO ADD YOUR BOLLYWOOD SONG:
-       1. Save your MP3 file in the same folder as this HTML
-          e.g. name it "song.mp3"
-       2. In the <audio> tag above (search for bg-audio),
-          remove the comment tags <!-- and -->
-       3. Change src="song.mp3" to your filename
-       4. Done! The play button will control your song.
-
-       The piano melody below plays only if no audio file is set.
+       MUSIC SYSTEM — RAABTA via YouTube IFrame API
     ══════════════════════════════════════════════════════ */
-    let audioCtx = null, musicPlaying = false, musicLoop = null;
-    const audioEl = document.getElementById('bg-audio'); // null if commented out
+    let ytPlayer = null;
+    let musicPlaying = false;
+    let ytReady = false;
+
+    /* Load YouTube IFrame API */
+    (function(){
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    })();
+
+    /* Called automatically by YT API when ready */
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('yt-player-iframe', {
+        events: {
+          'onReady': function(e) {
+            ytReady = true;
+            e.target.setVolume(45);
+            if (playIntent) { e.target.playVideo(); }
+          },
+          'onStateChange': function(e) {
+            if (e.data === YT.PlayerState.PLAYING) {
+              musicPlaying = true;
+              document.getElementById('mp-icon').textContent = '🔊';
+              document.getElementById('mp-title-text').textContent = 'NOW PLAYING';
+              document.getElementById('mp-bars').classList.add('playing');
+            } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+              musicPlaying = false;
+              document.getElementById('mp-icon').textContent = '🎵';
+              document.getElementById('mp-title-text').textContent = 'RAABTA';
+              document.getElementById('mp-bars').classList.remove('playing');
+            }
+          }
+        }
+      });
+    }
+
+    let playIntent = false;
 
     function tryAutoplay() {
-      if (audioEl) {
-        audioEl.volume = 0.5;
-        audioEl.play().then(() => {
-          musicPlaying = true;
-          document.getElementById('mp-icon').textContent = '🔊';
-          document.getElementById('mp-bars').classList.add('playing');
-          document.querySelector('.mp-title').textContent = 'NOW PLAYING';
-        }).catch(() => {}); // Browser may block, user can tap to play
-      } else {
-        // Fallback: soft piano
-        try {
-          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          if (audioCtx.state === 'suspended') audioCtx.resume();
-          musicPlaying = true;
-          playPiano();
-          document.getElementById('mp-icon').textContent = '🔊';
-          document.getElementById('mp-bars').classList.add('playing');
-        } catch(e) {}
+      playIntent = true;
+      if (ytReady && ytPlayer) {
+        ytPlayer.playVideo();
       }
+      /* If YT not ready yet, onReady callback checks playIntent and starts */
     }
 
     function toggleMusic(e) {
       e.stopPropagation();
-      if (audioEl) {
-        // HTML audio mode
-        if (audioEl.paused) {
-          audioEl.play();
-          musicPlaying = true;
-          document.getElementById('mp-icon').textContent = '🔊';
-          document.getElementById('mp-bars').classList.add('playing');
-        } else {
-          audioEl.pause();
-          musicPlaying = false;
-          document.getElementById('mp-icon').textContent = '🎵';
-          document.getElementById('mp-bars').classList.remove('playing');
-        }
-      } else {
-        // WebAudio piano mode
-        if (!musicPlaying) {
-          try {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            musicPlaying = true;
-            playPiano();
-            document.getElementById('mp-icon').textContent = '🔊';
-            document.getElementById('mp-bars').classList.add('playing');
-          } catch(err) {}
-        } else {
-          musicPlaying = false;
-          clearTimeout(musicLoop);
-          if (audioCtx) audioCtx.suspend();
-          document.getElementById('mp-icon').textContent = '🎵';
-          document.getElementById('mp-bars').classList.remove('playing');
-        }
+      if (!ytReady || !ytPlayer) {
+        document.getElementById('mp-title-text').textContent = 'LOADING...';
+        return;
       }
-    }
-
-    /* ── Soft romantic piano melody (replaces shehnai) ── */
-    const PIANO = [
-      // Gentle, warm, romantic notes — Raag Yaman inspired
-      [523.25,0.6,0.08],[587.33,0.4,0.06],[659.25,0.5,0.06],[739.99,0.8,0.12],
-      [783.99,0.5,0.06],[739.99,0.4,0.06],[659.25,0.6,0.08],[587.33,0.4,0.06],
-      [523.25,0.5,0.06],[493.88,0.4,0.06],[440.00,0.8,0.14],[493.88,0.4,0.06],
-      [523.25,0.6,0.08],[587.33,0.5,0.06],[659.25,0.4,0.06],[739.99,1.0,0.18],
-      [659.25,0.4,0.06],[587.33,0.5,0.06],[523.25,0.6,0.08],[493.88,0.4,0.06],
-      [440.00,0.5,0.06],[392.00,0.4,0.06],[349.23,1.2,0.25],
-    ];
-
-    function playPianoNote(ctx, freq, startTime, duration) {
-      const osc  = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();
-      const gain = ctx.createGain();
-      const comp = ctx.createDynamicsCompressor();
-
-      osc.type  = 'triangle';
-      osc2.type = 'sine';
-      osc.frequency.setValueAtTime(freq, startTime);
-      osc2.frequency.setValueAtTime(freq * 2.001, startTime);
-
-      gain.gain.setValueAtTime(0, startTime);
-      gain.gain.linearRampToValueAtTime(0.22, startTime + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.12, startTime + duration * 0.5);
-      gain.gain.linearRampToValueAtTime(0, startTime + duration);
-
-      osc.connect(gain); osc2.connect(gain);
-      gain.connect(comp); comp.connect(ctx.destination);
-
-      const end = startTime + duration + 0.05;
-      osc.start(startTime);  osc.stop(end);
-      osc2.start(startTime); osc2.stop(end);
-    }
-
-    function playPiano() {
-      if (!audioCtx || !musicPlaying) return;
-      let t = audioCtx.currentTime + 0.1;
-      PIANO.forEach(([freq, dur, gap]) => {
-        playPianoNote(audioCtx, freq, t, dur);
-        t += dur + gap;
-      });
-      const total = PIANO.reduce((a, [,d,g]) => a + d + g, 0);
-      musicLoop = setTimeout(playPiano, total * 1000 - 200);
+      if (musicPlaying) {
+        ytPlayer.pauseVideo();
+      } else {
+        ytPlayer.playVideo();
+      }
     }
 
     /* ── HEARTS BURST ── */
