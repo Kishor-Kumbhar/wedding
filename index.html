@@ -758,14 +758,7 @@
          Video ID: dTjGse3gn6Y  = Raabta Instrumental (Agent Sasco)
          If you want a different version, replace the VIDEO_ID below.
     ══ -->
-    <div id="yt-container" style="position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;overflow:hidden;pointer-events:none;">
-      <iframe id="yt-player-iframe"
-        width="1" height="1"
-        src="https://youtube.com/shorts/_lpCzeGTJNs?si=JQpIY1ZdJcjQ0rZU"
-        allow="autoplay; encrypted-media"
-        frameborder="0">
-      </iframe>
-    </div>
+<div id="yt-player-iframe" style="position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;"></div>
 
     <div id="music-player" onclick="toggleMusic(event)">
       <button class="mp-btn" id="mp-icon" aria-label="Toggle music">🎵</button>
@@ -1116,14 +1109,22 @@
     })();
 
     /* Called automatically by YT API when ready */
-    function onYouTubeIframeAPIReady() {
-      ytPlayer = new YT.Player('yt-player-iframe', {
-        events: {
-          'onReady': function(e) {
-            ytReady = true;
-            e.target.setVolume(45);
-            if (playIntent) { e.target.playVideo(); }
-          },
+ function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('yt-player-iframe', {
+    videoId: '_lpCzeGTJNs',   // ← ADD THIS LINE
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      loop: 1,
+      playlist: '_lpCzeGTJNs',  // required for loop to work
+      playsinline: 1,
+    },
+    events: {
+      'onReady': function(e) {
+        ytReady = true;
+        e.target.setVolume(45);
+        if (playIntent) { e.target.playVideo(); }
+      },
           'onStateChange': function(e) {
             if (e.data === YT.PlayerState.PLAYING) {
               musicPlaying = true;
