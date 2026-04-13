@@ -249,7 +249,7 @@
     <div id="music-player" onclick="toggleMusic(event)">
       <button class="mp-btn" id="mp-icon" aria-label="Toggle music">🎵</button>
       <div class="mp-info">
-        <span class="mp-title" id="mp-title-text">RAABTA</span>
+        <span class="mp-title" id="mp-title-text">INVITATION</span>
         <span class="mp-sub">Shorts &nbsp;·&nbsp; Wedding</span>
       </div>
       <div class="mp-bars" id="mp-bars">
@@ -569,7 +569,7 @@
             } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
               musicPlaying = false;
               document.getElementById('mp-icon').textContent = '🎵';
-              document.getElementById('mp-title-text').textContent = 'RAABTA';
+              document.getElementById('mp-title-text').textContent = 'INVITATION';
               document.getElementById('mp-bars').classList.remove('playing');
             }
           }
